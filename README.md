@@ -1,7 +1,5 @@
 # Interior Chair Api
 
----
-
 ## Description
 - インテリアで有名なイスの情報を提供するAPI
 - オシャレ椅子に詳しくなりたい人向け
