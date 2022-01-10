@@ -27,3 +27,6 @@ shell:
 
 rebuild:
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) build --no-cache
+
+tidy:
+	docker exec -it $(API_CONTAINER_NAME) go mod tidy
