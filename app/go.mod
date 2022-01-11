@@ -2,9 +2,16 @@ module app
 
 go 1.17
 
-require github.com/labstack/echo/v4 v4.6.2
+require (
+	github.com/labstack/echo/v4 v4.6.2
+	gorm.io/driver/mysql v1.2.3
+	gorm.io/gorm v1.22.4
+)
 
 require (
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.3 // indirect
 	github.com/labstack/gommon v0.3.1 // indirect
 	github.com/mattn/go-colorable v0.1.11 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
