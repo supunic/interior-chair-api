@@ -1,3 +1,5 @@
 FROM golang:1.17.2-alpine
 
-RUN apk update && apk add git
+WORKDIR /go/src/app
+
+RUN go install github.com/cosmtrek/air@v1.27.3
