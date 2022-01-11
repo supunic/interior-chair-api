@@ -5,7 +5,7 @@ services:
     build: ./docker/go
     tty: true
     volumes:
-      - ./app:/go/src/app
+      - ./src:/go/src
     ports:
       - "1323:1323"
   db:
