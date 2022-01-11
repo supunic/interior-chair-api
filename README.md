@@ -8,9 +8,11 @@
 wip
 
 ## Dependencies
-- go 1.17.2
-- mysql 8.0.19
-- docker 4.1.1
+- go v1.17
+- echo v4.6
+- gorm v2.0
+- mysql v8.0
+- docker v4.1
 
 ## Setup
 ```shell
