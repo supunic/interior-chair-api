@@ -1,32 +1,31 @@
-DOCKER_COMPOSE_FILE_DIR := ./docker/docker-compose.yml
-API_CONTAINER_NAME := interior_chair_api
-DB_CONTAINER_NAME := interior_chair_mysql
+API_SERVICE_NAME := app
+DB_SERVICE_NAME := db
 
 start:
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) up -d && \
-	docker exec -it $(API_CONTAINER_NAME) go run main.go
+	docker-compose up -d && \
+	docker-compose exec $(API_SERVICE_NAME) air
 
 restart:
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) down && \
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) build --no-cache && \
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) up -d && \
-	docker exec -it $(API_CONTAINER_NAME) go run main.go
+	docker-compose down && \
+	docker-compose build --no-cache && \
+	docker-compose up -d && \
+	docker-compose exec $(API_SERVICE_NAME) air
 
 mysql:
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) up -d && \
-	docker exec -it $(DB_CONTAINER_NAME) mysql -u root -p
+	docker-compose up -d && \
+	docker-compose exec $(DB_SERVICE_NAME) mysql -u root -p
 
-up:
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) up -d
+upd:
+	docker-compose up -d
 
 down:
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) down
+	docker-compose down
 
 shell:
-	docker exec -it $(API_CONTAINER_NAME) ash
+	docker-compose exec $(API_SERVICE_NAME) ash
 
 rebuild:
-	docker-compose -f $(DOCKER_COMPOSE_FILE_DIR) build --no-cache
+	docker-compose build --no-cache
 
 tidy:
-	docker exec -it $(API_CONTAINER_NAME) go mod tidy
+	docker-compose exec $(API_SERVICE_NAME) go mod tidy
