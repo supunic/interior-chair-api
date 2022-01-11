@@ -7,7 +7,7 @@ services:
     volumes:
       - ../app:/go/src/app
     ports:
-      - "8080:8080"
+      - "1323:1323"
   db:
     container_name: interior_chair_mysql
     build: ./mysql
