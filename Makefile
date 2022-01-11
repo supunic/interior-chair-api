@@ -15,17 +15,19 @@ mysql:
 	docker-compose up -d && \
 	docker-compose exec $(DB_SERVICE_NAME) mysql -u root -p
 
+shell:
+	docker-compose up -d && \
+	docker-compose exec $(API_SERVICE_NAME) ash
+
+tidy:
+	docker-compose up -d && \
+	docker-compose exec $(API_SERVICE_NAME) go mod tidy
+
 upd:
 	docker-compose up -d
 
 down:
 	docker-compose down
 
-shell:
-	docker-compose exec $(API_SERVICE_NAME) ash
-
 rebuild:
 	docker-compose build --no-cache
-
-tidy:
-	docker-compose exec $(API_SERVICE_NAME) go mod tidy
