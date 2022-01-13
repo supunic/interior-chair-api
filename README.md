@@ -28,3 +28,24 @@ make shell
 make mysql
 ```
 その他はMakefile参照
+
+## Directory Structure
+```text
+src
+├── adapter
+│   ├── controller
+│   ├── gateway
+│   └── presenter
+├── driver
+│   ├── db
+│   └── web
+├── entity
+│   ├── model
+│   ├── repository
+│   └── service
+├── usecase
+│   ├── interactor
+│   └── port
+└── main.go
+```
+詳細は各ディレクトリのREADME参照
