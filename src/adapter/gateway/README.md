@@ -1,4 +1,4 @@
-# persistence
+# adapter / gateway
 
 ## レイヤー
 Interface Adapters
@@ -11,4 +11,3 @@ Interface Adapters
 
 ## 実装
 - リポジトリ
-  - UserRepository
