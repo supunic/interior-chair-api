@@ -51,6 +51,6 @@ src
 詳細は各ディレクトリのREADME参照
 
 ### Reference
-- [Go言語とClean ArchitectureでAPIサーバを構築する -Qiita](https://qiita.com/ariku/items/874656b33d2e5acdf281)
+- [Go言語とClean ArchitectureでAPIサーバを構築する - Qiita](https://qiita.com/ariku/items/874656b33d2e5acdf281)
 - [【Go】厳密なClean Architectureとその妥協案 - Qiita](https://qiita.com/ariku/items/659a11767912c2ec266d)
 
