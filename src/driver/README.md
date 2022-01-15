@@ -1,0 +1,19 @@
+# migrations
+
+[sql-migrate](https://github.com/rubenv/sql-migrate)
+を使用
+
+
+```shell
+$ sql-migrate --help
+
+# Usage: sql-migrate [--version] [--help] <command> [<args>]
+# 
+# Available commands are:
+#     down      Undo a database migration
+#     new       Create a new migration
+#     redo      Reapply the last migration
+#     skip      Sets the database level to the most recent version available, without running the migrations
+#     status    Show migration status
+#     up        Migrates the database to the most recent version available
+```
