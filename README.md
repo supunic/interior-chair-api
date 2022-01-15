@@ -10,7 +10,9 @@ wip
 ## Dependencies
 - go v1.17
 - echo v4.6
+- air
 - gorm v2.0
+- sql-migrate v1.0
 - mysql v8.0
 - docker v4.1
 
