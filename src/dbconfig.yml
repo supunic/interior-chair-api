@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: root:root@tcp(interior_chair_mysql:3306)/interior_chair_dev?charset=utf8mb4&parseTime=true&loc=Local
+  dir: driver/db/migrations
+  table: migrations
