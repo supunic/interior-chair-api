@@ -1,28 +1,36 @@
 package interactor
 
 import (
+	"app/entity/model/chair"
 	"app/usecase/port"
 )
 
-type Chair struct {
+type ChairInteractor struct {
 	OutputPort port.ChairOutputPort
 	Repository port.ChairRepository
 }
 
 func NewChairInputPort(outputPort port.ChairOutputPort, repository port.ChairRepository) port.ChairInputPort {
-	return &Chair{
+	return &ChairInteractor{
 		OutputPort: outputPort,
 		Repository: repository,
 	}
 }
 
-func (c *Chair) FindByID(id int) {
-	chair, err := c.Repository.FindByID(id)
+func (ci *ChairInteractor) FindByID(id int) {
+	chairID, err := chair.NewChairID(id)
 
 	if err != nil {
-		c.OutputPort.RenderError(err)
+		ci.OutputPort.RenderError(err)
 		return
 	}
 
-	c.OutputPort.Render(chair)
+	c, err := ci.Repository.FindByID(chairID)
+
+	if err != nil {
+		ci.OutputPort.RenderError(err)
+		return
+	}
+
+	ci.OutputPort.Render(c)
 }
