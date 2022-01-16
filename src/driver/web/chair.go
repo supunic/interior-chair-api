@@ -10,9 +10,9 @@ import (
 )
 
 func initChairRouter(e *echo.Echo, conn *gorm.DB) *echo.Echo {
-	chair := controller.Chair{
-		OutputFactory:     presenter.NewChairOutputPort,
+	chair := controller.ChairController{
 		InputFactory:      interactor.NewChairInputPort,
+		OutputFactory:     presenter.NewChairOutputPort,
 		RepositoryFactory: gateway.NewChairRepository,
 		Conn:              conn,
 	}
