@@ -18,6 +18,7 @@ func initChairRouter(e *echo.Echo, conn *gorm.DB) *echo.Echo {
 	}
 
 	e.GET("/chair/:id", chair.FindByID)
+	e.POST("/chair", chair.Create)
 
 	return e
 }
