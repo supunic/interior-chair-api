@@ -1,7 +1,7 @@
 package port
 
 import (
-	"app/entity/model"
+	"app/entity/model/chair"
 )
 
 type ChairInputPort interface {
@@ -9,10 +9,10 @@ type ChairInputPort interface {
 }
 
 type ChairOutputPort interface {
-	Render(chair *model.Chair)
+	Render(chair *chair.Chair)
 	RenderError(err error)
 }
 
 type ChairRepository interface {
-	FindByID(id int) (*model.Chair, error)
+	FindByID(id *chair.ID) (*chair.Chair, error)
 }
