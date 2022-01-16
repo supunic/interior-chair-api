@@ -31,17 +31,19 @@ func (cc *ChairController) FindByID(ctx echo.Context) error {
 
 func (cc *ChairController) Create(ctx echo.Context) error {
 	chairName := ctx.Param("chairName")
+
 	chairFeature := ctx.Param("chairFeature")
-	chairImage := ctx.Param("chairImage")
 
 	chairYear, err := strconv.Atoi(ctx.Param("chairYear"))
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err.Error())
 	}
 
+	chairImage := ctx.Param("chairImage")
+
 	chairAuthorName := ctx.Param("chairAuthorName")
+
 	chairAuthorDescription := ctx.Param("chairAuthorDescription")
-	chairAuthorImage := ctx.Param("chairAuthorImage")
 
 	chairAuthorBirthYear, err := strconv.Atoi(ctx.Param("chairAuthorBirthYear"))
 	if err != nil {
@@ -52,6 +54,8 @@ func (cc *ChairController) Create(ctx echo.Context) error {
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err.Error())
 	}
+
+	chairAuthorImage := ctx.Param("chairAuthorImage")
 
 	outputPort := cc.OutputFactory(ctx.Response())
 	repository := cc.RepositoryFactory(cc.Conn)

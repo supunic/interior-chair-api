@@ -2,7 +2,6 @@ package port
 
 import (
 	"app/entity/model/chair"
-	"app/entity/model/chairAuthor"
 )
 
 type ChairInputPort interface {
@@ -27,15 +26,5 @@ type ChairOutputPort interface {
 
 type ChairRepository interface {
 	FindByID(id *chair.ID) (*chair.Chair, error)
-	Create(
-		chairName *chair.Name,
-		chairFeature *chair.Feature,
-		chairYear *chair.Year,
-		chairImage *chair.Image,
-		chairAuthorName *chairAuthor.Name,
-		chairAuthorDescription *chairAuthor.Description,
-		chairAuthorBirthYear *chairAuthor.BirthYear,
-		chairAuthorDiedYear *chairAuthor.DiedYear,
-		chairAuthorImage *chairAuthor.Image,
-	) (*chair.Chair, error)
+	Create(chair *chair.Chair) (*chair.Chair, error)
 }

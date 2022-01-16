@@ -45,71 +45,31 @@ func (ci *ChairInteractor) Create(
 	chairAuthorDiedYear int,
 	chairAuthorImage string,
 ) {
-	chairNameObj, err := chair.NewChairName(chairName)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairFeatureObj, err := chair.NewChairFeature(chairFeature)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairYearObj, err := chair.NewChairYear(chairYear)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairImageObj, err := chair.NewChairImage(chairImage)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairAuthorNameObj, err := chairAuthor.NewChairAuthorName(chairAuthorName)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairAuthorDescriptionObj, err := chairAuthor.NewChairAuthorDescription(chairAuthorDescription)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairAuthorBirthYearObj, err := chairAuthor.NewChairAuthorBirthYear(chairAuthorBirthYear)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairAuthorDiedYearObj, err := chairAuthor.NewChairAuthorDiedYear(chairAuthorDiedYear)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	chairAuthorImageObj, err := chairAuthor.NewChairAuthorImage(chairAuthorImage)
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	c, err := ci.Repository.Create(
-		chairNameObj,
-		chairFeatureObj,
-		chairYearObj,
-		chairImageObj,
-		chairAuthorNameObj,
-		chairAuthorDescriptionObj,
-		chairAuthorBirthYearObj,
-		chairAuthorDiedYearObj,
-		chairAuthorImageObj,
+	newChairAuthor, err := chairAuthor.NewChairAuthor(
+		chairAuthorName,
+		chairAuthorDescription,
+		chairAuthorBirthYear,
+		chairAuthorDiedYear,
+		chairAuthorImage,
 	)
+	if err != nil {
+		ci.OutputPort.RenderError(err)
+		return
+	}
+
+	newChair, err := chair.NewChair(
+		chairName,
+		chairFeature,
+		chairYear,
+		chairImage,
+		newChairAuthor,
+	)
+	if err != nil {
+		ci.OutputPort.RenderError(err)
+		return
+	}
+
+	c, err := ci.Repository.Create(newChair)
 
 	if err != nil {
 		ci.OutputPort.RenderError(err)
