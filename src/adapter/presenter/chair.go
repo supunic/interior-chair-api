@@ -1,21 +1,21 @@
 package presenter
 
 import (
-	"app/entity/model"
+	"app/entity/model/chair"
 	"app/usecase/port"
 	"fmt"
 	"net/http"
 )
 
-type Chair struct {
+type ChairPresenter struct {
 	w http.ResponseWriter
 }
 
 func NewChairOutputPort(w http.ResponseWriter) port.ChairOutputPort {
-	return &Chair{w: w}
+	return &ChairPresenter{w: w}
 }
 
-func (c *Chair) Render(chair *model.Chair) {
+func (c *ChairPresenter) Render(chair *chair.Chair) {
 	c.w.WriteHeader(http.StatusOK)
 
 	if _, err := fmt.Fprint(c.w, chair.Name); err != nil {
@@ -23,7 +23,7 @@ func (c *Chair) Render(chair *model.Chair) {
 	}
 }
 
-func (c *Chair) RenderError(err error) {
+func (c *ChairPresenter) RenderError(err error) {
 	c.w.WriteHeader(http.StatusInternalServerError)
 
 	if _, err := fmt.Fprint(c.w, err); err != nil {
