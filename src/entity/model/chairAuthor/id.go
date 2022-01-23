@@ -2,7 +2,7 @@ package chairAuthor
 
 import "errors"
 
-type ID int
+type ID uint
 
 func NewChairAuthorID(val int) (*ID, error) {
 	if val < 1 {
@@ -10,4 +10,8 @@ func NewChairAuthorID(val int) (*ID, error) {
 	}
 	id := ID(val)
 	return &id, nil
+}
+
+func (v *ID) Value() uint {
+	return uint(*v)
 }
