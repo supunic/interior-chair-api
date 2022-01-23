@@ -1,8 +1,9 @@
 package presenter
 
 import (
-	"app/entity/model/chair"
+	"app/usecase/data"
 	"app/usecase/port"
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -15,10 +16,17 @@ func NewChairOutputPort(w http.ResponseWriter) port.ChairOutputPort {
 	return &ChairPresenter{w: w}
 }
 
-func (c *ChairPresenter) Render(chair *chair.Chair) {
-	c.w.WriteHeader(http.StatusOK)
+func (c *ChairPresenter) Render(cod *data.ChairOutputData) {
+	res, err := json.Marshal(cod)
 
-	if _, err := fmt.Fprint(c.w, chair.Name); err != nil {
+	if err != nil {
+		http.Error(c.w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	c.w.Header().Set("Content-Type", "application/json")
+
+	if _, err := c.w.Write(res); err != nil {
 		return
 	}
 }
