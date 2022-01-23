@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"app/usecase/data"
 	"app/usecase/port"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -30,47 +31,16 @@ func (cc *ChairController) FindByID(ctx echo.Context) error {
 }
 
 func (cc *ChairController) Create(ctx echo.Context) error {
-	chairName := ctx.Param("chairName")
+	var cid data.ChairInputData
 
-	chairFeature := ctx.Param("chairFeature")
-
-	chairYear, err := strconv.Atoi(ctx.Param("chairYear"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
+	if err := ctx.Bind(&cid); err != nil {
+		return ctx.JSON(http.StatusBadRequest, err)
 	}
-
-	chairImage := ctx.Param("chairImage")
-
-	chairAuthorName := ctx.Param("chairAuthorName")
-
-	chairAuthorDescription := ctx.Param("chairAuthorDescription")
-
-	chairAuthorBirthYear, err := strconv.Atoi(ctx.Param("chairAuthorBirthYear"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
-	}
-
-	chairAuthorDiedYear, err := strconv.Atoi(ctx.Param("chairAuthorDiedYear"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
-	}
-
-	chairAuthorImage := ctx.Param("chairAuthorImage")
 
 	outputPort := cc.OutputFactory(ctx.Response())
 	repository := cc.RepositoryFactory(cc.Conn)
 	inputPort := cc.InputFactory(outputPort, repository)
-	inputPort.Create(
-		chairName,
-		chairFeature,
-		chairYear,
-		chairImage,
-		chairAuthorName,
-		chairAuthorDescription,
-		chairAuthorBirthYear,
-		chairAuthorDiedYear,
-		chairAuthorImage,
-	)
+	inputPort.Create(cid)
 
 	return nil
 }

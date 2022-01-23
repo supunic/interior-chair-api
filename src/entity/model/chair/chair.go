@@ -3,12 +3,13 @@ package chair
 import "app/entity/model/chairAuthor"
 
 type Chair struct {
-	ID      ID                      `json:"id"`
-	Name    Name                    `json:"name"`
-	Feature Feature                 `json:"feature"`
-	Year    Year                    `json:"year"`
-	Image   Image                   `json:"image"`
-	Author  chairAuthor.ChairAuthor `json:"chairAuthor"`
+	ID       ID                      `json:"id"`
+	AuthorID chairAuthor.ID          `json:"authorId"`
+	Name     Name                    `json:"name"`
+	Feature  Feature                 `json:"feature"`
+	Year     Year                    `json:"year"`
+	Image    Image                   `json:"image"`
+	Author   chairAuthor.ChairAuthor `json:"chairAuthor"`
 }
 
 func NewChair(

@@ -3,6 +3,7 @@ package interactor
 import (
 	"app/entity/model/chair"
 	"app/entity/model/chairAuthor"
+	"app/usecase/data"
 	"app/usecase/port"
 )
 
@@ -34,36 +35,28 @@ func (ci *ChairInteractor) FindByID(id int) {
 	ci.OutputPort.Render(c)
 }
 
-func (ci *ChairInteractor) Create(
-	chairName string,
-	chairFeature string,
-	chairYear int,
-	chairImage string,
-	chairAuthorName string,
-	chairAuthorDescription string,
-	chairAuthorBirthYear int,
-	chairAuthorDiedYear int,
-	chairAuthorImage string,
-) {
+func (ci *ChairInteractor) Create(cid data.ChairInputData) {
 	newChairAuthor, err := chairAuthor.NewChairAuthor(
-		chairAuthorName,
-		chairAuthorDescription,
-		chairAuthorBirthYear,
-		chairAuthorDiedYear,
-		chairAuthorImage,
+		cid.Author.Name,
+		cid.Author.Description,
+		cid.Author.BirthYear,
+		cid.Author.DiedYear,
+		cid.Author.Image,
 	)
+
 	if err != nil {
 		ci.OutputPort.RenderError(err)
 		return
 	}
 
 	newChair, err := chair.NewChair(
-		chairName,
-		chairFeature,
-		chairYear,
-		chairImage,
+		cid.Name,
+		cid.Feature,
+		cid.Year,
+		cid.Image,
 		newChairAuthor,
 	)
+
 	if err != nil {
 		ci.OutputPort.RenderError(err)
 		return

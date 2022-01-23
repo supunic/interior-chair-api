@@ -2,21 +2,12 @@ package port
 
 import (
 	"app/entity/model/chair"
+	"app/usecase/data"
 )
 
 type ChairInputPort interface {
 	FindByID(id int)
-	Create(
-		chairName string,
-		chairFeature string,
-		chairYear int,
-		chairImage string,
-		chairAuthorName string,
-		chairAuthorDescription string,
-		chairAuthorBirthYear int,
-		chairAuthorDiedYear int,
-		chairAuthorImage string,
-	)
+	Create(chairInputData data.ChairInputData)
 }
 
 type ChairOutputPort interface {
