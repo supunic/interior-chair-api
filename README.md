@@ -42,6 +42,7 @@ src
 │   ├── db
 │   └── web
 ├── entity
+│   ├── builder
 │   ├── model
 │   ├── repository
 │   └── service

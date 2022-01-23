@@ -1,4 +1,4 @@
-# usecase / data
+# entity / builder
 
 ## レイヤー
 Application Business Rules
