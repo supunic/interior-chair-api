@@ -7,11 +7,11 @@ import (
 
 type ChairInputPort interface {
 	FindByID(id int)
-	Create(chairInputData data.ChairInputData)
+	Create(chairInputData *data.ChairInputData)
 }
 
 type ChairOutputPort interface {
-	Render(chair *chair.Chair)
+	Render(chairOutputData *data.ChairOutputData)
 	RenderError(err error)
 }
 

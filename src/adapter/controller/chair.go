@@ -40,7 +40,7 @@ func (cc *ChairController) Create(ctx echo.Context) error {
 	outputPort := cc.OutputFactory(ctx.Response())
 	repository := cc.RepositoryFactory(cc.Conn)
 	inputPort := cc.InputFactory(outputPort, repository)
-	inputPort.Create(cid)
+	inputPort.Create(&cid)
 
 	return nil
 }
