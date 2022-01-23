@@ -46,6 +46,7 @@ src
 │   ├── repository
 │   └── service
 ├── usecase
+│   ├── data
 │   ├── interactor
 │   └── port
 └── main.go
