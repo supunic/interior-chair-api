@@ -16,9 +16,3 @@ type ChairOutputData struct {
 	Image   string `json:"image"`
 	Author  ChairAuthorOutputData
 }
-
-//func NewChairOutputData(c *chair.Chair) (*ChairOutputData, error) {
-//	return &ChairOutputData{
-//		ID: c.ID.value(),
-//	}, nil
-//}
