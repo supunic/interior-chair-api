@@ -2,7 +2,7 @@ package game
 
 import "errors"
 
-type ID int
+type ID uint
 
 func NewGameID(val int) (*ID, error) {
 	if val < 1 {

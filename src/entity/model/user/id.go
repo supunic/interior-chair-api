@@ -2,7 +2,7 @@ package user
 
 import "errors"
 
-type ID int
+type ID uint
 
 func NewUserID(val int) (*ID, error) {
 	if val < 1 {
