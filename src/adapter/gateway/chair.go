@@ -1,6 +1,7 @@
 package gateway
 
 import (
+	"app/entity/builder"
 	"app/entity/model/chair"
 	"app/usecase/port"
 	"fmt"
@@ -16,7 +17,8 @@ func NewChairRepository(conn *gorm.DB) port.ChairRepository {
 }
 
 func (cr ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
-	c := chair.Chair{ID: *id}
+	//c := chair.Chair{ID: *id}
+	c := chair.Chair{} // 修正必要
 
 	if err := cr.conn.First(c).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -30,7 +32,9 @@ func (cr ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
 }
 
 func (cr ChairRepository) Create(chair *chair.Chair) (*chair.Chair, error) {
-	if err := cr.conn.Create(&chair).Error; err != nil {
+	crd := chair.RepositoryData(builder.NewChairRepositoryData())
+
+	if err := cr.conn.Create(&crd).Error; err != nil {
 		return nil, err
 	}
 

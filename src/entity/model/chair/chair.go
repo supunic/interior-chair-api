@@ -1,15 +1,33 @@
 package chair
 
-import "app/entity/model/chairAuthor"
+import (
+	"app/entity/builder"
+	"app/entity/model/chairAuthor"
+)
 
 type Chair struct {
-	ID       ID                      `json:"id"`
-	AuthorID chairAuthor.ID          `json:"authorId"`
-	Name     Name                    `json:"name"`
-	Feature  Feature                 `json:"feature"`
-	Year     Year                    `json:"year"`
-	Image    Image                   `json:"image"`
-	Author   chairAuthor.ChairAuthor `json:"chairAuthor"`
+	id      ID
+	name    Name
+	feature Feature
+	year    Year
+	image   Image
+	author  chairAuthor.ChairAuthor
+}
+
+func (c *Chair) GetID() *ID                          { return &c.id }
+func (c *Chair) GetName() *Name                      { return &c.name }
+func (c *Chair) GetFeature() *Feature                { return &c.feature }
+func (c *Chair) GetYear() *Year                      { return &c.year }
+func (c *Chair) GetImage() *Image                    { return &c.image }
+func (c *Chair) GetAuthor() *chairAuthor.ChairAuthor { return &c.author }
+
+func (c *Chair) SetID(id int) error {
+	chairID, err := NewChairID(id)
+	if err != nil {
+		return err
+	}
+	c.id = *chairID
+	return nil
 }
 
 func NewChair(
@@ -40,10 +58,26 @@ func NewChair(
 	}
 
 	return &Chair{
-		Name:    *chairName,
-		Feature: *chairFeature,
-		Year:    *chairYear,
-		Image:   *chairImage,
-		Author:  *chairAuthor,
+		name:    *chairName,
+		feature: *chairFeature,
+		year:    *chairYear,
+		image:   *chairImage,
+		author:  *chairAuthor,
 	}, nil
+}
+
+func (c *Chair) RepositoryData(cn builder.ChairNotification) *builder.Chair {
+	cb := cn.Build()
+
+	cb.Name = c.GetName().Value()
+	cb.Feature = c.GetFeature().Value()
+	cb.Year = c.GetYear().Value()
+	cb.Image = c.GetImage().Value()
+	cb.Author.Name = c.GetAuthor().GetName().Value()
+	cb.Author.Description = c.GetAuthor().GetDescription().Value()
+	cb.Author.BirthYear = c.GetAuthor().GetBirthYear().Value()
+	cb.Author.DiedYear = c.GetAuthor().GetDiedYear().Value()
+	cb.Author.Image = c.GetAuthor().GetImage().Value()
+
+	return cb
 }
