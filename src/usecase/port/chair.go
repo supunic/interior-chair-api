@@ -6,13 +6,13 @@ import (
 )
 
 type ChairInputPort interface {
-	FindByID(id int)
+	FindByID(id uint)
 	Create(chairInputData *data.ChairInputData)
 }
 
 type ChairOutputPort interface {
-	Render(chairOutputData *data.ChairOutputData)
-	RenderError(err error)
+	Output(cod *data.ChairOutputData)
+	OutputError(err error)
 }
 
 type ChairRepository interface {
