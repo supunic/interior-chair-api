@@ -26,6 +26,6 @@ func NewChairOutputData(c *chair.Chair) *ChairOutputData {
 		Feature: c.Feature.Value(),
 		Year:    c.Year.Value(),
 		Image:   c.Image.Value(),
-		Author:  *NewChairAuthorOutputData(&c.Author),
+		Author:  *NewChairAuthorOutputData(&c.ChairAuthor),
 	}
 }

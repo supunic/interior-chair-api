@@ -5,13 +5,13 @@ import (
 )
 
 type Chair struct {
-	ID       ID
-	AuthorID chairAuthor.ID
-	Name     Name
-	Feature  Feature
-	Year     Year
-	Image    Image
-	Author   chairAuthor.ChairAuthor
+	ID            ID
+	ChairAuthorID chairAuthor.ID
+	Name          Name
+	Feature       Feature
+	Year          Year
+	Image         Image
+	ChairAuthor   chairAuthor.ChairAuthor
 }
 
 func NewChair(
@@ -42,10 +42,10 @@ func NewChair(
 	}
 
 	return &Chair{
-		Name:    *chairName,
-		Feature: *chairFeature,
-		Year:    *chairYear,
-		Image:   *chairImage,
-		Author:  *chairAuthor,
+		Name:        *chairName,
+		Feature:     *chairFeature,
+		Year:        *chairYear,
+		Image:       *chairImage,
+		ChairAuthor: *chairAuthor,
 	}, nil
 }
