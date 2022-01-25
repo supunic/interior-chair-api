@@ -6,15 +6,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type ChairRepository struct {
+type chairRepository struct {
 	db *gorm.DB
 }
 
 func NewChairRepository(db *gorm.DB) port.ChairRepository {
-	return &ChairRepository{db: db}
+	return &chairRepository{db: db}
 }
 
-func (cr *ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
+func (cr *chairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 	if err := cr.db.Create(&c).Error; err != nil {
 		return nil, err
 	}
@@ -22,7 +22,7 @@ func (cr *ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 	return c, nil
 }
 
-func (cr *ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
+func (cr *chairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
 	c := &chair.Chair{ID: *id}
 	cr.db.Joins(`ChairAuthor`).Find(&c)
 

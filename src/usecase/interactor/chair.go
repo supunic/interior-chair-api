@@ -7,16 +7,16 @@ import (
 	"app/usecase/port"
 )
 
-type ChairInteractor struct {
+type chairInteractor struct {
 	o port.ChairOutputPort
 	r port.ChairRepository
 }
 
 func NewChairInputPort(o port.ChairOutputPort, r port.ChairRepository) port.ChairInputPort {
-	return &ChairInteractor{o: o, r: r}
+	return &chairInteractor{o: o, r: r}
 }
 
-func (ci *ChairInteractor) Create(cid *data.ChairInputData) {
+func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 	newChairAuthor, err := chairAuthor.NewChairAuthor(
 		cid.Author.Name,
 		cid.Author.Description,
@@ -55,7 +55,7 @@ func (ci *ChairInteractor) Create(cid *data.ChairInputData) {
 	ci.o.Output(cod)
 }
 
-func (ci *ChairInteractor) FindByID(id uint) {
+func (ci *chairInteractor) FindByID(id uint) {
 	chairID, err := chair.NewChairID(id)
 
 	if err != nil {
