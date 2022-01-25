@@ -13,19 +13,19 @@ type ChairAdapter interface {
 }
 
 type chairAdapter struct {
-	NewInputPort  func(o port.ChairOutputPort, r port.ChairRepository) port.ChairInputPort
-	NewOutputPort func(c echo.Context) port.ChairOutputPort
-	NewRepository func(c *gorm.DB) port.ChairRepository
-	Conn          *gorm.DB
+	newInputPort  func(o port.ChairOutputPort, r port.ChairRepository) port.ChairInputPort
+	newOutputPort func(c echo.Context) port.ChairOutputPort
+	newRepository func(c *gorm.DB) port.ChairRepository
+	db            *gorm.DB
 }
 
 func NewChairAdapter(
 	i func(o port.ChairOutputPort, r port.ChairRepository) port.ChairInputPort,
 	o func(c echo.Context) port.ChairOutputPort,
 	r func(c *gorm.DB) port.ChairRepository,
-	c *gorm.DB,
+	db *gorm.DB,
 ) ChairAdapter {
-	return &chairAdapter{NewInputPort: i, NewOutputPort: o, NewRepository: r, Conn: c}
+	return &chairAdapter{newInputPort: i, newOutputPort: o, newRepository: r, db: db}
 }
 
 func (ca *chairAdapter) Create(c echo.Context) error {
@@ -46,9 +46,9 @@ func (ca *chairAdapter) FindByID(c echo.Context) error {
 
 func (ca *chairAdapter) handler(c echo.Context) controller.ChairController {
 	// context を受け取る度に生成しないといけない
-	cop := ca.NewOutputPort(c)
-	cr := ca.NewRepository(ca.Conn)
-	cip := ca.NewInputPort(cop, cr)
+	cop := ca.newOutputPort(c)
+	cr := ca.newRepository(ca.db)
+	cip := ca.newInputPort(cop, cr)
 
 	return controller.NewChairController(c, cip)
 }

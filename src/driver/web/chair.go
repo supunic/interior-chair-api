@@ -9,12 +9,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func initChairRouter(e *echo.Echo, conn *gorm.DB) *echo.Echo {
+func initChairRouter(e *echo.Echo, db *gorm.DB) *echo.Echo {
 	ca := adapter.NewChairAdapter(
 		interactor.NewChairInputPort,
 		presenter.NewChairOutputPort,
 		gateway.NewChairRepository,
-		conn,
+		db,
 	)
 
 	e.POST("/chair", ca.Create)

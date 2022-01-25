@@ -7,15 +7,15 @@ import (
 )
 
 type ChairRepository struct {
-	conn *gorm.DB
+	db *gorm.DB
 }
 
-func NewChairRepository(conn *gorm.DB) port.ChairRepository {
-	return &ChairRepository{conn: conn}
+func NewChairRepository(db *gorm.DB) port.ChairRepository {
+	return &ChairRepository{db: db}
 }
 
 func (cr *ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
-	if err := cr.conn.Create(&c).Error; err != nil {
+	if err := cr.db.Create(&c).Error; err != nil {
 		return nil, err
 	}
 
@@ -24,7 +24,7 @@ func (cr *ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 
 func (cr *ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
 	c := &chair.Chair{ID: *id}
-	cr.conn.Joins(`ChairAuthor`).Find(&c)
+	cr.db.Joins(`ChairAuthor`).Find(&c)
 
 	return c, nil
 }
