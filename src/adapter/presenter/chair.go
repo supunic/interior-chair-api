@@ -3,38 +3,26 @@ package presenter
 import (
 	"app/usecase/data"
 	"app/usecase/port"
-	"encoding/json"
-	"fmt"
+	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type ChairPresenter struct {
-	w http.ResponseWriter
+	c echo.Context
 }
 
-func NewChairOutputPort(w http.ResponseWriter) port.ChairOutputPort {
-	return &ChairPresenter{w: w}
+func NewChairOutputPort(c echo.Context) port.ChairOutputPort {
+	return &ChairPresenter{c: c}
 }
 
-func (c *ChairPresenter) Render(cod *data.ChairOutputData) {
-	res, err := json.Marshal(cod)
-
-	if err != nil {
-		http.Error(c.w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	c.w.Header().Set("Content-Type", "application/json")
-
-	if _, err := c.w.Write(res); err != nil {
-		return
+func (cp *ChairPresenter) Output(cod *data.ChairOutputData) {
+	if err := cp.c.JSON(http.StatusOK, cod); err != nil {
+		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func (c *ChairPresenter) RenderError(err error) {
-	c.w.WriteHeader(http.StatusInternalServerError)
-
-	if _, err := fmt.Fprint(c.w, err); err != nil {
-		return
+func (cp *ChairPresenter) OutputError(err error) {
+	if err := cp.c.JSON(http.StatusInternalServerError, err); err != nil {
+		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
 	}
 }

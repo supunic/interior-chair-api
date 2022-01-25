@@ -1,7 +1,7 @@
 package web
 
 import (
-	"app/adapter/controller"
+	"app/adapter"
 	"app/adapter/gateway"
 	"app/adapter/presenter"
 	"app/usecase/interactor"
@@ -10,15 +10,15 @@ import (
 )
 
 func initChairRouter(e *echo.Echo, conn *gorm.DB) *echo.Echo {
-	chair := controller.ChairController{
-		InputFactory:      interactor.NewChairInputPort,
-		OutputFactory:     presenter.NewChairOutputPort,
-		RepositoryFactory: gateway.NewChairRepository,
-		Conn:              conn,
-	}
+	ca := adapter.NewChairAdapter(
+		interactor.NewChairInputPort,
+		presenter.NewChairOutputPort,
+		gateway.NewChairRepository,
+		conn,
+	)
 
-	e.GET("/chair/:id", chair.FindByID)
-	e.POST("/chair", chair.Create)
+	e.POST("/chair", ca.Create)
+	e.GET("/chair/:id", ca.FindByID)
 
 	return e
 }

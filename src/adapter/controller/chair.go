@@ -4,43 +4,44 @@ import (
 	"app/usecase/data"
 	"app/usecase/port"
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
 
-type ChairController struct {
-	InputFactory      func(o port.ChairOutputPort, c port.ChairRepository) port.ChairInputPort
-	OutputFactory     func(w http.ResponseWriter) port.ChairOutputPort
-	RepositoryFactory func(c *gorm.DB) port.ChairRepository
-	Conn              *gorm.DB
+type ChairController interface {
+	Create() error
+	FindByID() error
 }
 
-func (cc *ChairController) FindByID(ctx echo.Context) error {
-	id, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
+type chairController struct {
+	c echo.Context
+	i port.ChairInputPort
+}
+
+func NewChairController(c echo.Context, i port.ChairInputPort) ChairController {
+	return &chairController{c: c, i: i}
+}
+
+func (cc *chairController) Create() error {
+	var cid data.ChairInputData
+
+	if err := cc.c.Bind(&cid); err != nil {
+		return cc.c.JSON(http.StatusBadRequest, err)
 	}
 
-	outputPort := cc.OutputFactory(ctx.Response())
-	repository := cc.RepositoryFactory(cc.Conn)
-	inputPort := cc.InputFactory(outputPort, repository)
-	inputPort.FindByID(id)
+	cc.i.Create(&cid)
 
 	return nil
 }
 
-func (cc *ChairController) Create(ctx echo.Context) error {
-	var cid data.ChairInputData
+func (cc *chairController) FindByID() error {
+	id, err := strconv.Atoi(cc.c.Param("id"))
 
-	if err := ctx.Bind(&cid); err != nil {
-		return ctx.JSON(http.StatusBadRequest, err)
+	if err != nil {
+		return cc.c.JSON(http.StatusBadRequest, err)
 	}
 
-	outputPort := cc.OutputFactory(ctx.Response())
-	repository := cc.RepositoryFactory(cc.Conn)
-	inputPort := cc.InputFactory(outputPort, repository)
-	inputPort.Create(&cid)
+	cc.i.FindByID(uint(id))
 
 	return nil
 }

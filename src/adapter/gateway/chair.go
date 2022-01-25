@@ -1,7 +1,6 @@
 package gateway
 
 import (
-	"app/entity/builder"
 	"app/entity/model/chair"
 	"app/usecase/port"
 	"fmt"
@@ -16,27 +15,24 @@ func NewChairRepository(conn *gorm.DB) port.ChairRepository {
 	return &ChairRepository{conn: conn}
 }
 
-func (cr ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
-	//c := chair.Chair{ID: *id}
-	c := chair.Chair{} // 修正必要
+func (cr ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
+	if err := cr.conn.Create(&c).Error; err != nil {
+		return nil, err
+	}
 
-	if err := cr.conn.First(c).Error; err != nil {
+	return c, nil
+}
+
+func (cr ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
+	c := &chair.Chair{ID: *id}
+
+	if err := cr.conn.First(&c).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, fmt.Errorf("chair Not Found. id = %d", id)
 		}
 
-		return nil, fmt.Errorf("internal Server Error. %s", err.Error())
-	}
-
-	return &c, nil
-}
-
-func (cr ChairRepository) Create(chair *chair.Chair) (*chair.Chair, error) {
-	crd := chair.RepositoryData(builder.NewChairRepositoryData())
-
-	if err := cr.conn.Create(&crd).Error; err != nil {
 		return nil, err
 	}
 
-	return chair, nil
+	return c, nil
 }
