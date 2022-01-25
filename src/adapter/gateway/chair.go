@@ -15,7 +15,7 @@ func NewChairRepository(conn *gorm.DB) port.ChairRepository {
 	return &ChairRepository{conn: conn}
 }
 
-func (cr ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
+func (cr *ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 	if err := cr.conn.Create(&c).Error; err != nil {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func (cr ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 	return c, nil
 }
 
-func (cr ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
+func (cr *ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
 	c := &chair.Chair{ID: *id}
 
 	if err := cr.conn.First(&c).Error; err != nil {
