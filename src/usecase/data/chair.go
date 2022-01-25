@@ -1,5 +1,7 @@
 package data
 
+import "app/entity/model/chair"
+
 type ChairInputData struct {
 	Name    string `form:"chairName"`
 	Feature string `form:"chairFeature"`
@@ -15,4 +17,15 @@ type ChairOutputData struct {
 	Year    int    `json:"year"`
 	Image   string `json:"image"`
 	Author  ChairAuthorOutputData
+}
+
+func NewChairOutputData(c *chair.Chair) *ChairOutputData {
+	return &ChairOutputData{
+		ID:      c.ID.Value(),
+		Name:    c.Name.Value(),
+		Feature: c.Feature.Value(),
+		Year:    c.Year.Value(),
+		Image:   c.Image.Value(),
+		Author:  *NewChairAuthorOutputData(&c.Author),
+	}
 }

@@ -5,38 +5,15 @@ import (
 	"app/entity/model/chairAuthor"
 	"app/usecase/data"
 	"app/usecase/port"
-	"fmt"
 )
 
 type ChairInteractor struct {
-	OutputPort port.ChairOutputPort
-	Repository port.ChairRepository
+	o port.ChairOutputPort
+	r port.ChairRepository
 }
 
-func NewChairInputPort(outputPort port.ChairOutputPort, repository port.ChairRepository) port.ChairInputPort {
-	return &ChairInteractor{
-		OutputPort: outputPort,
-		Repository: repository,
-	}
-}
-
-func (ci *ChairInteractor) FindByID(id int) {
-	chairID, err := chair.NewChairID(id)
-
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	c, err := ci.Repository.FindByID(chairID)
-
-	if err != nil {
-		ci.OutputPort.RenderError(err)
-		return
-	}
-
-	fmt.Println(c) // 修正必要
-	//ci.OutputPort.Render(c)
+func NewChairInputPort(o port.ChairOutputPort, r port.ChairRepository) port.ChairInputPort {
+	return &ChairInteractor{o: o, r: r}
 }
 
 func (ci *ChairInteractor) Create(cid *data.ChairInputData) {
@@ -49,7 +26,7 @@ func (ci *ChairInteractor) Create(cid *data.ChairInputData) {
 	)
 
 	if err != nil {
-		ci.OutputPort.RenderError(err)
+		ci.o.OutputError(err)
 		return
 	}
 
@@ -62,32 +39,38 @@ func (ci *ChairInteractor) Create(cid *data.ChairInputData) {
 	)
 
 	if err != nil {
-		ci.OutputPort.RenderError(err)
+		ci.o.OutputError(err)
 		return
 	}
 
-	c, err := ci.Repository.Create(newChair)
+	c, err := ci.r.Create(newChair)
 
 	if err != nil {
-		ci.OutputPort.RenderError(err)
+		ci.o.OutputError(err)
 		return
 	}
 
-	cod := data.ChairOutputData{
-		ID:      c.GetID().Value(),
-		Name:    c.GetName().Value(),
-		Feature: c.GetFeature().Value(),
-		Year:    c.GetYear().Value(),
-		Image:   c.GetImage().Value(),
-		Author: data.ChairAuthorOutputData{
-			ID:          c.GetAuthor().GetID().Value(),
-			Name:        c.GetAuthor().GetName().Value(),
-			Description: c.GetAuthor().GetDescription().Value(),
-			BirthYear:   c.GetAuthor().GetBirthYear().Value(),
-			DiedYear:    c.GetAuthor().GetDiedYear().Value(),
-			Image:       c.GetAuthor().GetImage().Value(),
-		},
+	cod := data.NewChairOutputData(c)
+
+	ci.o.Output(cod)
+}
+
+func (ci *ChairInteractor) FindByID(id uint) {
+	chairID, err := chair.NewChairID(id)
+
+	if err != nil {
+		ci.o.OutputError(err)
+		return
 	}
 
-	ci.OutputPort.Render(&cod)
+	c, err := ci.r.FindByID(chairID)
+
+	if err != nil {
+		ci.o.OutputError(err)
+		return
+	}
+
+	cod := data.NewChairOutputData(c)
+
+	ci.o.Output(cod)
 }
