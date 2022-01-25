@@ -1,22 +1,13 @@
 package chairAuthor
 
-import "app/entity/builder"
-
 type ChairAuthor struct {
-	id          ID
-	name        Name
-	description Description
-	birthYear   BirthYear
-	diedYear    DiedYear
-	image       Image
+	ID          ID
+	Name        Name
+	Description Description
+	BirthYear   BirthYear
+	DiedYear    DiedYear
+	Image       Image
 }
-
-func (c *ChairAuthor) GetID() *ID                   { return &c.id }
-func (c *ChairAuthor) GetName() *Name               { return &c.name }
-func (c *ChairAuthor) GetDescription() *Description { return &c.description }
-func (c *ChairAuthor) GetBirthYear() *BirthYear     { return &c.birthYear }
-func (c *ChairAuthor) GetDiedYear() *DiedYear       { return &c.diedYear }
-func (c *ChairAuthor) GetImage() *Image             { return &c.image }
 
 func NewChairAuthor(
 	name string,
@@ -51,22 +42,10 @@ func NewChairAuthor(
 	}
 
 	return &ChairAuthor{
-		name:        *chairAuthorName,
-		description: *chairAuthorDescription,
-		birthYear:   *chairAuthorBirthYear,
-		diedYear:    *chairAuthorDiedYear,
-		image:       *chairAuthorImage,
+		Name:        *chairAuthorName,
+		Description: *chairAuthorDescription,
+		BirthYear:   *chairAuthorBirthYear,
+		DiedYear:    *chairAuthorDiedYear,
+		Image:       *chairAuthorImage,
 	}, nil
-}
-
-func (c *ChairAuthor) RepositoryData(cn builder.ChairAuthorNotification) *builder.ChairAuthor {
-	cb := cn.Build()
-
-	cb.Name = c.name.Value()
-	cb.Description = c.description.Value()
-	cb.BirthYear = c.birthYear.Value()
-	cb.DiedYear = c.diedYear.Value()
-	cb.Image = c.image.Value()
-
-	return cb
 }
