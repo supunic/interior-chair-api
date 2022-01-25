@@ -3,7 +3,6 @@ package gateway
 import (
 	"app/entity/model/chair"
 	"app/usecase/port"
-	"fmt"
 	"gorm.io/gorm"
 )
 
@@ -25,14 +24,7 @@ func (cr *ChairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 
 func (cr *ChairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
 	c := &chair.Chair{ID: *id}
-
-	if err := cr.conn.First(&c).Error; err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return nil, fmt.Errorf("chair Not Found. id = %d", id)
-		}
-
-		return nil, err
-	}
+	cr.conn.Joins(`ChairAuthor`).Find(&c)
 
 	return c, nil
 }
