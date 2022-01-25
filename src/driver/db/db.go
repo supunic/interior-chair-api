@@ -6,7 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func Init() *gorm.DB {
+// New gorm の初期化
+func New() *gorm.DB {
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true&loc=Local",
 		"root",

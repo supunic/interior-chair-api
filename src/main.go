@@ -7,7 +7,5 @@ import (
 )
 
 func main() {
-	conn := db.Init()
-	e := web.Init(echo.New(), conn)
-	e.Logger.Fatal(e.Start(":1323"))
+	web.Serve(echo.New(), db.New())
 }
