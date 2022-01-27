@@ -22,6 +22,13 @@ func (cr *chairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 	return c, nil
 }
 
+func (cr *chairRepository) FetchAll() ([]*chair.Chair, error) {
+	var chairs []*chair.Chair
+	cr.db.Joins(`ChairAuthor`).Find(&chairs)
+
+	return chairs, nil
+}
+
 func (cr *chairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
 	c := &chair.Chair{ID: *id}
 	cr.db.Joins(`ChairAuthor`).Find(&c)

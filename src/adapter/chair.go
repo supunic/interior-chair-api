@@ -9,6 +9,7 @@ import (
 
 type ChairAdapter interface {
 	Create(c echo.Context) error
+	FetchAll(c echo.Context) error
 	FindByID(c echo.Context) error
 }
 
@@ -30,6 +31,14 @@ func NewChairAdapter(
 
 func (ca *chairAdapter) Create(c echo.Context) error {
 	if err := ca.handler(c).Create(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (ca *chairAdapter) FetchAll(c echo.Context) error {
+	if err := ca.handler(c).FetchAll(); err != nil {
 		return err
 	}
 

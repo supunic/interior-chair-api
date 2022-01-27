@@ -10,6 +10,7 @@ import (
 
 type ChairController interface {
 	Create() error
+	FetchAll() error
 	FindByID() error
 }
 
@@ -30,6 +31,12 @@ func (cc *chairController) Create() error {
 	}
 
 	cc.i.Create(&cid)
+
+	return nil
+}
+
+func (cc *chairController) FetchAll() error {
+	cc.i.FetchAll()
 
 	return nil
 }

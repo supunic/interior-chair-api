@@ -26,7 +26,7 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 	)
 
 	if err != nil {
-		ci.o.OutputError(err)
+		ci.o.Error(err)
 		return
 	}
 
@@ -39,38 +39,55 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 	)
 
 	if err != nil {
-		ci.o.OutputError(err)
+		ci.o.Error(err)
 		return
 	}
 
 	c, err := ci.r.Create(newChair)
 
 	if err != nil {
-		ci.o.OutputError(err)
+		ci.o.Error(err)
 		return
 	}
 
 	cod := data.NewChairOutputData(c)
 
-	ci.o.Output(cod)
+	ci.o.Create(cod)
+}
+
+func (ci *chairInteractor) FetchAll() {
+	var cod []*data.ChairOutputData
+
+	c, err := ci.r.FetchAll()
+
+	if err != nil {
+		ci.o.Error(err)
+		return
+	}
+
+	for _, cv := range c {
+		cod = append(cod, data.NewChairOutputData(cv))
+	}
+
+	ci.o.FetchAll(cod)
 }
 
 func (ci *chairInteractor) FindByID(id uint) {
 	chairID, err := chair.NewChairID(id)
 
 	if err != nil {
-		ci.o.OutputError(err)
+		ci.o.Error(err)
 		return
 	}
 
 	c, err := ci.r.FindByID(chairID)
 
 	if err != nil {
-		ci.o.OutputError(err)
+		ci.o.Error(err)
 		return
 	}
 
 	cod := data.NewChairOutputData(c)
 
-	ci.o.Output(cod)
+	ci.o.FindByID(cod)
 }

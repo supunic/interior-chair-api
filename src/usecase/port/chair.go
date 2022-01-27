@@ -6,16 +6,20 @@ import (
 )
 
 type ChairInputPort interface {
-	FindByID(id uint)
 	Create(chairInputData *data.ChairInputData)
+	FetchAll()
+	FindByID(id uint)
 }
 
 type ChairOutputPort interface {
-	Output(cod *data.ChairOutputData)
-	OutputError(err error)
+	Create(cod *data.ChairOutputData)
+	FetchAll(cod []*data.ChairOutputData)
+	FindByID(cod *data.ChairOutputData)
+	Error(err error)
 }
 
 type ChairRepository interface {
-	FindByID(id *chair.ID) (*chair.Chair, error)
 	Create(chair *chair.Chair) (*chair.Chair, error)
+	FetchAll() ([]*chair.Chair, error)
+	FindByID(id *chair.ID) (*chair.Chair, error)
 }

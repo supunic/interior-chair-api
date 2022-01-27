@@ -19,6 +19,7 @@ func NewChairRouter(e *echo.Echo, ca adapter.ChairAdapter) ChairRouter {
 }
 
 func (cr *chairRouter) Register() {
-	cr.e.POST("/chair", cr.ca.Create)
-	cr.e.GET("/chair/:id", cr.ca.FindByID)
+	cr.e.POST("/chairs", cr.ca.Create)
+	cr.e.GET("/chairs", cr.ca.FetchAll)
+	cr.e.GET("/chairs/:id", cr.ca.FindByID)
 }
