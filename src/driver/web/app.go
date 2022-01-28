@@ -1,7 +1,7 @@
 package web
 
 import (
-	"app/adapter"
+	"app/adapter/controller"
 	"app/adapter/gateway"
 	"app/adapter/presenter"
 	"app/driver/web/router"
@@ -16,12 +16,12 @@ func initApp(e *echo.Echo, db *gorm.DB) {
 }
 
 func initChair(e *echo.Echo, db *gorm.DB) {
-	ca := adapter.NewChairAdapter(
+	cc := controller.NewChairController(
 		interactor.NewChairInputPort,
 		presenter.NewChairOutputPort,
 		gateway.NewChairRepository,
 		db,
 	)
-	cr := router.NewChairRouter(e, ca)
+	cr := router.NewChairRouter(e, cc)
 	cr.Register()
 }

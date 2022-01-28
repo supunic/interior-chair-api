@@ -1,7 +1,7 @@
 package router
 
 import (
-	"app/adapter"
+	"app/adapter/controller"
 	"github.com/labstack/echo/v4"
 )
 
@@ -11,15 +11,15 @@ type ChairRouter interface {
 
 type chairRouter struct {
 	e  *echo.Echo
-	ca adapter.ChairAdapter
+	cc controller.ChairController
 }
 
-func NewChairRouter(e *echo.Echo, ca adapter.ChairAdapter) ChairRouter {
-	return &chairRouter{e: e, ca: ca}
+func NewChairRouter(e *echo.Echo, cc controller.ChairController) ChairRouter {
+	return &chairRouter{e: e, cc: cc}
 }
 
 func (cr *chairRouter) Register() {
-	cr.e.POST("/chairs", cr.ca.Create)
-	cr.e.GET("/chairs", cr.ca.FetchAll)
-	cr.e.GET("/chairs/:id", cr.ca.FindByID)
+	cr.e.POST("/chairs", cr.cc.Create)
+	cr.e.GET("/chairs", cr.cc.FetchAll)
+	cr.e.GET("/chairs/:id", cr.cc.FindByID)
 }
