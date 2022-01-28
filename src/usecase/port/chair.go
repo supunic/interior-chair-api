@@ -12,9 +12,9 @@ type ChairInputPort interface {
 }
 
 type ChairOutputPort interface {
-	Create(cod *data.ChairOutputData)
-	FetchAll(cod []*data.ChairOutputData)
-	FindByID(cod *data.ChairOutputData)
+	Create(chairOutputData *data.ChairOutputData)
+	FetchAll(chairOutputDataList []*data.ChairOutputData)
+	FindByID(chairOutputData *data.ChairOutputData)
 	Error(err error)
 }
 
