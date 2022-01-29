@@ -21,6 +21,12 @@ func (cp *chairPresenter) Create(cod *data.ChairOutputData) {
 	}
 }
 
+func (cp *chairPresenter) Delete() {
+	if err := cp.c.JSON(http.StatusOK, struct{}{}); err != nil {
+		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
+	}
+}
+
 func (cp *chairPresenter) FetchAll(cod []*data.ChairOutputData) {
 	if err := cp.c.JSON(http.StatusOK, cod); err != nil {
 		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
