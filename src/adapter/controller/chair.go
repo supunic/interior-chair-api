@@ -13,6 +13,7 @@ type ChairController interface {
 	Create(c echo.Context) error
 	FetchAll(c echo.Context) error
 	FindByID(c echo.Context) error
+	Update(c echo.Context) error
 }
 
 type newChairInputPort func(o port.ChairOutputPort, r port.ChairRepository) port.ChairInputPort
@@ -31,10 +32,10 @@ func NewChairController(i newChairInputPort, o newChairOutputPort, r newChairRep
 }
 
 func (cc *chairController) Create(c echo.Context) error {
-	var cid data.ChairInputData
+	var cid data.ChairCreateInputData
 
 	if err := c.Bind(&cid); err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	cc.handler(c).Create(&cid)
@@ -52,10 +53,22 @@ func (cc *chairController) FindByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	cc.handler(c).FindByID(uint(id))
+
+	return nil
+}
+
+func (cc *chairController) Update(c echo.Context) error {
+	var cid data.ChairUpdateInputData
+
+	if err := c.Bind(&cid); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	cc.handler(c).Update(&cid)
 
 	return nil
 }
