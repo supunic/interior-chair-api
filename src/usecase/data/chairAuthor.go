@@ -2,7 +2,16 @@ package data
 
 import "app/entity/model/chairAuthor"
 
-type ChairAuthorInputData struct {
+type ChairAuthorCreateInputData struct {
+	Name        string `form:"chairAuthorName"`
+	Description string `form:"chairAuthorDescription"`
+	BirthYear   int    `form:"chairAuthorBirthYear"`
+	DiedYear    int    `form:"chairAuthorDiedYear"`
+	Image       string `form:"chairAuthorImage"`
+}
+
+type ChairAuthorUpdateInputData struct {
+	ID          uint   `form:"chairAuthorId"`
 	Name        string `form:"chairAuthorName"`
 	Description string `form:"chairAuthorDescription"`
 	BirthYear   int    `form:"chairAuthorBirthYear"`
