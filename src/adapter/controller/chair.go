@@ -6,7 +6,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 	"net/http"
-	"strconv"
 )
 
 type ChairController interface {
@@ -45,13 +44,13 @@ func (cc *chairController) Create(c echo.Context) error {
 }
 
 func (cc *chairController) Delete(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	var cid data.ChairInputData
 
-	if err != nil {
+	if err := c.Bind(&cid); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	cc.handler(c).Delete(uint(id))
+	cc.handler(c).Delete(cid.ID)
 
 	return nil
 }
@@ -63,13 +62,13 @@ func (cc *chairController) FetchAll(c echo.Context) error {
 }
 
 func (cc *chairController) FindByID(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	var cid data.ChairInputData
 
-	if err != nil {
+	if err := c.Bind(&cid); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	cc.handler(c).FindByID(uint(id))
+	cc.handler(c).FindByID(cid.ID)
 
 	return nil
 }

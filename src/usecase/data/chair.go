@@ -3,7 +3,7 @@ package data
 import "app/entity/model/chair"
 
 type ChairInputData struct {
-	ID      uint   `form:"chairId"`
+	ID      uint   `form:"chairId" param:"id"`
 	Name    string `form:"chairName"`
 	Feature string `form:"chairFeature"`
 	Year    int    `form:"chairYear"`
