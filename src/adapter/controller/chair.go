@@ -11,6 +11,7 @@ import (
 
 type ChairController interface {
 	Create(c echo.Context) error
+	Delete(c echo.Context) error
 	FetchAll(c echo.Context) error
 	FindByID(c echo.Context) error
 	Update(c echo.Context) error
@@ -39,6 +40,18 @@ func (cc *chairController) Create(c echo.Context) error {
 	}
 
 	cc.handler(c).Create(&cid)
+
+	return nil
+}
+
+func (cc *chairController) Delete(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	cc.handler(c).Delete(uint(id))
 
 	return nil
 }
