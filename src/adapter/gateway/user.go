@@ -5,10 +5,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type userRepository struct {
+type userGateway struct {
 	db *gorm.DB
 }
 
 func NewUserRepository(db *gorm.DB) port.UserRepository {
-	return &userRepository{db: db}
+	return &userGateway{db: db}
 }

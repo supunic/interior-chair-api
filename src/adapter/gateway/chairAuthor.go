@@ -5,10 +5,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type chairAuthorRepository struct {
+type chairAuthorGateway struct {
 	db *gorm.DB
 }
 
 func NewChairAuthorRepository(db *gorm.DB) port.ChairAuthorRepository {
-	return &chairAuthorRepository{db: db}
+	return &chairAuthorGateway{db: db}
 }

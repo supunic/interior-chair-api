@@ -6,15 +6,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type chairRepository struct {
+type chairGateway struct {
 	db *gorm.DB
 }
 
 func NewChairRepository(db *gorm.DB) port.ChairRepository {
-	return &chairRepository{db: db}
+	return &chairGateway{db: db}
 }
 
-func (cr *chairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
+func (cr *chairGateway) Create(c *chair.Chair) (*chair.Chair, error) {
 	if err := cr.db.Create(&c).Error; err != nil {
 		return nil, err
 	}
@@ -22,7 +22,7 @@ func (cr *chairRepository) Create(c *chair.Chair) (*chair.Chair, error) {
 	return c, nil
 }
 
-func (cr *chairRepository) Delete(id *chair.ID) error {
+func (cr *chairGateway) Delete(id *chair.ID) error {
 	c := &chair.Chair{ID: *id}
 
 	if err := cr.db.Delete(&c).Error; err != nil {
@@ -32,21 +32,21 @@ func (cr *chairRepository) Delete(id *chair.ID) error {
 	return nil
 }
 
-func (cr *chairRepository) FetchAll() ([]*chair.Chair, error) {
+func (cr *chairGateway) FetchAll() ([]*chair.Chair, error) {
 	var chairs []*chair.Chair
 	cr.db.Joins(`ChairAuthor`).Find(&chairs)
 
 	return chairs, nil
 }
 
-func (cr *chairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
+func (cr *chairGateway) FindByID(id *chair.ID) (*chair.Chair, error) {
 	c := &chair.Chair{ID: *id}
 	cr.db.Joins(`ChairAuthor`).Find(&c)
 
 	return c, nil
 }
 
-func (cr *chairRepository) Update(c *chair.Chair) (*chair.Chair, error) {
+func (cr *chairGateway) Update(c *chair.Chair) (*chair.Chair, error) {
 	if err := cr.db.Updates(&c).Error; err != nil {
 		return nil, err
 	}
