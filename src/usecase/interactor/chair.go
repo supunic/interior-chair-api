@@ -55,6 +55,22 @@ func (ci *chairInteractor) Create(cid *data.ChairCreateInputData) {
 	ci.o.Create(cod)
 }
 
+func (ci *chairInteractor) Delete(id uint) {
+	chairID, err := chair.NewChairID(id)
+
+	if err != nil {
+		ci.o.Error(err)
+		return
+	}
+
+	if err := ci.r.Delete(chairID); err != nil {
+		ci.o.Error(err)
+		return
+	}
+
+	ci.o.Delete()
+}
+
 func (ci *chairInteractor) FetchAll() {
 	var cod []*data.ChairOutputData
 
