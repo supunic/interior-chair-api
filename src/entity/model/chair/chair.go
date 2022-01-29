@@ -15,12 +15,18 @@ type Chair struct {
 }
 
 func NewChair(
+	id uint,
 	name string,
 	feature string,
 	year int,
 	image string,
 	chairAuthor *chairAuthor.ChairAuthor,
 ) (*Chair, error) {
+	chairID, err := NewChairID(id)
+	if err != nil {
+		return nil, err
+	}
+
 	chairName, err := NewChairName(name)
 	if err != nil {
 		return nil, err
@@ -42,37 +48,12 @@ func NewChair(
 	}
 
 	return &Chair{
-		Name:        *chairName,
-		Feature:     *chairFeature,
-		Year:        *chairYear,
-		Image:       *chairImage,
-		ChairAuthor: *chairAuthor,
+		ID:            *chairID,
+		ChairAuthorID: chairAuthor.ID,
+		Name:          *chairName,
+		Feature:       *chairFeature,
+		Year:          *chairYear,
+		Image:         *chairImage,
+		ChairAuthor:   *chairAuthor,
 	}, nil
-}
-
-func NewChairWithID(
-	id uint,
-	chairAuthorId *chairAuthor.ID,
-	name string,
-	feature string,
-	year int,
-	image string,
-	chairAuthor *chairAuthor.ChairAuthor,
-) (*Chair, error) {
-	newChair, err := NewChair(name, feature, year, image, chairAuthor)
-
-	if err != nil {
-		return nil, err
-	}
-
-	chairID, err := NewChairID(id)
-
-	if err != nil {
-		return nil, err
-	}
-
-	newChair.ID = *chairID
-	newChair.ChairAuthorID = *chairAuthorId
-
-	return newChair, nil
 }

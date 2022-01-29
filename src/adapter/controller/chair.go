@@ -33,7 +33,7 @@ func NewChairController(i newChairInputPort, o newChairOutputPort, r newChairRep
 }
 
 func (cc *chairController) Create(c echo.Context) error {
-	var cid data.ChairCreateInputData
+	var cid data.ChairInputData
 
 	if err := c.Bind(&cid); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
@@ -75,7 +75,7 @@ func (cc *chairController) FindByID(c echo.Context) error {
 }
 
 func (cc *chairController) Update(c echo.Context) error {
-	var cid data.ChairUpdateInputData
+	var cid data.ChairInputData
 
 	if err := c.Bind(&cid); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())

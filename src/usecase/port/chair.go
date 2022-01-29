@@ -6,11 +6,11 @@ import (
 )
 
 type ChairInputPort interface {
-	Create(chairInputData *data.ChairCreateInputData)
+	Create(chairInputData *data.ChairInputData)
 	Delete(id uint)
 	FetchAll()
 	FindByID(id uint)
-	Update(chairInputData *data.ChairUpdateInputData)
+	Update(chairInputData *data.ChairInputData)
 }
 
 type ChairOutputPort interface {

@@ -10,12 +10,18 @@ type ChairAuthor struct {
 }
 
 func NewChairAuthor(
+	id uint,
 	name string,
 	description string,
 	birthYear int,
 	diedYear int,
 	image string,
 ) (*ChairAuthor, error) {
+	chairAuthorID, err := NewChairAuthorID(id)
+	if err != nil {
+		return nil, err
+	}
+
 	chairAuthorName, err := NewChairAuthorName(name)
 	if err != nil {
 		return nil, err
@@ -42,35 +48,11 @@ func NewChairAuthor(
 	}
 
 	return &ChairAuthor{
+		ID:          *chairAuthorID,
 		Name:        *chairAuthorName,
 		Description: *chairAuthorDescription,
 		BirthYear:   *chairAuthorBirthYear,
 		DiedYear:    *chairAuthorDiedYear,
 		Image:       *chairAuthorImage,
 	}, nil
-}
-
-func NewChairAuthorWithID(
-	id uint,
-	name string,
-	description string,
-	birthYear int,
-	diedYear int,
-	image string,
-) (*ChairAuthor, error) {
-	newChairAuthor, err := NewChairAuthor(name, description, birthYear, diedYear, image)
-
-	if err != nil {
-		return nil, err
-	}
-
-	chairID, err := NewChairAuthorID(id)
-
-	if err != nil {
-		return nil, err
-	}
-
-	newChairAuthor.ID = *chairID
-
-	return newChairAuthor, nil
 }
