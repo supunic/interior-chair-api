@@ -17,7 +17,8 @@ func NewChairInputPort(o port.ChairOutputPort, r port.ChairRepository) port.Chai
 }
 
 func (ci *chairInteractor) Create(cid *data.ChairCreateInputData) {
-	newChairAuthor, err := chairAuthor.NewChairAuthor(
+	newChairAuthor, err := chairAuthor.NewChairAuthorWithID(
+		cid.Author.ID,
 		cid.Author.Name,
 		cid.Author.Description,
 		cid.Author.BirthYear,
@@ -30,7 +31,9 @@ func (ci *chairInteractor) Create(cid *data.ChairCreateInputData) {
 		return
 	}
 
-	newChair, err := chair.NewChair(
+	newChair, err := chair.NewChairWithID(
+		cid.ID,
+		&newChairAuthor.ID,
 		cid.Name,
 		cid.Feature,
 		cid.Year,
