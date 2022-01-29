@@ -49,3 +49,30 @@ func NewChair(
 		ChairAuthor: *chairAuthor,
 	}, nil
 }
+
+func NewChairWithID(
+	id uint,
+	chairAuthorId *chairAuthor.ID,
+	name string,
+	feature string,
+	year int,
+	image string,
+	chairAuthor *chairAuthor.ChairAuthor,
+) (*Chair, error) {
+	newChair, err := NewChair(name, feature, year, image, chairAuthor)
+
+	if err != nil {
+		return nil, err
+	}
+
+	chairID, err := NewChairID(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	newChair.ID = *chairID
+	newChair.ChairAuthorID = *chairAuthorId
+
+	return newChair, nil
+}
