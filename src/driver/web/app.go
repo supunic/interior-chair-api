@@ -14,6 +14,7 @@ import (
 func initApp(e *echo.Echo, db *gorm.DB) {
 	initChair(e, db)
 	initChairAuthor(e, db)
+	initUser(e, db)
 }
 
 func initChair(e *echo.Echo, db *gorm.DB) {
@@ -35,5 +36,16 @@ func initChairAuthor(e *echo.Echo, db *gorm.DB) {
 		db,
 	)
 	cr := router.NewChairAuthorRouter(e, cc)
+	cr.Register()
+}
+
+func initUser(e *echo.Echo, db *gorm.DB) {
+	cc := controller.NewUserController(
+		interactor.NewUserInputPort,
+		presenter.NewUserOutputPort,
+		gateway.NewUserRepository,
+		db,
+	)
+	cr := router.NewUserRouter(e, cc)
 	cr.Register()
 }
