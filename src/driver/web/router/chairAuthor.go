@@ -14,7 +14,7 @@ type chairAuthorRouter struct {
 	cc controller.ChairAuthorController
 }
 
-func NewChairAuthorRouter(e *echo.Echo, cc controller.ChairController) ChairAuthorRouter {
+func NewChairAuthorRouter(e *echo.Echo, cc controller.ChairAuthorController) ChairAuthorRouter {
 	return &chairAuthorRouter{e: e, cc: cc}
 }
 
