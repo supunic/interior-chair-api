@@ -33,8 +33,14 @@ func (cp *chairPresenter) FindByID(cod *data.ChairOutputData) {
 	}
 }
 
+func (cp *chairPresenter) Update(cod *data.ChairOutputData) {
+	if err := cp.c.JSON(http.StatusOK, cod); err != nil {
+		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
+	}
+}
+
 func (cp *chairPresenter) Error(err error) {
-	if err := cp.c.JSON(http.StatusInternalServerError, err); err != nil {
+	if err := cp.c.JSON(http.StatusInternalServerError, err.Error()); err != nil {
 		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
 	}
 }

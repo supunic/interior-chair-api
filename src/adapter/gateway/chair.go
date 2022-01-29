@@ -35,3 +35,11 @@ func (cr *chairRepository) FindByID(id *chair.ID) (*chair.Chair, error) {
 
 	return c, nil
 }
+
+func (cr *chairRepository) Update(c *chair.Chair) (*chair.Chair, error) {
+	if err := cr.db.Updates(&c).Error; err != nil {
+		return nil, err
+	}
+
+	return c, nil
+}

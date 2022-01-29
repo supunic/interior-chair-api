@@ -16,7 +16,7 @@ func NewChairInputPort(o port.ChairOutputPort, r port.ChairRepository) port.Chai
 	return &chairInteractor{o: o, r: r}
 }
 
-func (ci *chairInteractor) Create(cid *data.ChairInputData) {
+func (ci *chairInteractor) Create(cid *data.ChairCreateInputData) {
 	newChairAuthor, err := chairAuthor.NewChairAuthor(
 		cid.Author.Name,
 		cid.Author.Description,
@@ -90,4 +90,46 @@ func (ci *chairInteractor) FindByID(id uint) {
 	cod := data.NewChairOutputData(c)
 
 	ci.o.FindByID(cod)
+}
+
+func (ci *chairInteractor) Update(cid *data.ChairUpdateInputData) {
+	newChairAuthor, err := chairAuthor.NewChairAuthorWithID(
+		cid.Author.ID,
+		cid.Author.Name,
+		cid.Author.Description,
+		cid.Author.BirthYear,
+		cid.Author.DiedYear,
+		cid.Author.Image,
+	)
+
+	if err != nil {
+		ci.o.Error(err)
+		return
+	}
+
+	newChair, err := chair.NewChairWithID(
+		cid.ID,
+		&newChairAuthor.ID,
+		cid.Name,
+		cid.Feature,
+		cid.Year,
+		cid.Image,
+		newChairAuthor,
+	)
+
+	if err != nil {
+		ci.o.Error(err)
+		return
+	}
+
+	uc, err := ci.r.Update(newChair)
+
+	if err != nil {
+		ci.o.Error(err)
+		return
+	}
+
+	cod := data.NewChairOutputData(uc)
+
+	ci.o.Update(cod)
 }
