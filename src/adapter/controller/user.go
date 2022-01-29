@@ -19,12 +19,7 @@ type userController struct {
 	db            *gorm.DB
 }
 
-func NewUserController(
-	i newUserInputPort,
-	o newUserOutputPort,
-	r newUserRepository,
-	db *gorm.DB,
-) UserController {
+func NewUserController(i newUserInputPort, o newUserOutputPort, r newUserRepository, db *gorm.DB) UserController {
 	return &userController{newInputPort: i, newOutputPort: o, newRepository: r, db: db}
 }
 
