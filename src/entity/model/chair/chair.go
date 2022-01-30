@@ -1,8 +1,6 @@
 package chair
 
-import (
-	"app/entity/model/chairAuthor"
-)
+import "app/entity/model/chairAuthor"
 
 type Chair struct {
 	ID            ID
