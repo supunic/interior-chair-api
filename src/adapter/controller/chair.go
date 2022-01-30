@@ -31,6 +31,15 @@ func NewChairController(i newChairInputPort, o newChairOutputPort, r newChairRep
 	return &chairController{newInputPort: i, newOutputPort: o, newRepository: r, db: db}
 }
 
+func (cc *chairController) handler(c echo.Context) port.ChairInputPort {
+	// context を受け取る度に生成しないといけない
+	cop := cc.newOutputPort(c)
+	cr := cc.newRepository(cc.db)
+	cip := cc.newInputPort(cop, cr)
+
+	return cip
+}
+
 func (cc *chairController) Create(c echo.Context) error {
 	var cid data.ChairInputData
 
@@ -83,13 +92,4 @@ func (cc *chairController) Update(c echo.Context) error {
 	cc.handler(c).Update(&cid)
 
 	return nil
-}
-
-func (cc *chairController) handler(c echo.Context) port.ChairInputPort {
-	// context を受け取る度に生成しないといけない
-	cop := cc.newOutputPort(c)
-	cr := cc.newRepository(cc.db)
-	cip := cc.newInputPort(cop, cr)
-
-	return cip
 }
