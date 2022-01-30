@@ -1,9 +1,11 @@
 package data
 
-import "app/entity/model/chairAuthor"
+import (
+	"app/entity/model/chairAuthor"
+)
 
 type ChairAuthorInputData struct {
-	ID          uint   `form:"chairAuthorId"`
+	ID          uint   `form:"chairAuthorId"  param:"id"`
 	Name        string `form:"chairAuthorName"`
 	Description string `form:"chairAuthorDescription"`
 	BirthYear   int    `form:"chairAuthorBirthYear"`
@@ -12,21 +14,44 @@ type ChairAuthorInputData struct {
 }
 
 type ChairAuthorOutputData struct {
-	ID          uint   `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	BirthYear   int    `json:"birthYear"`
-	DiedYear    int    `json:"diedYear"`
-	Image       string `json:"image"`
+	ID          uint               `json:"id"`
+	Name        string             `json:"name"`
+	Description string             `json:"description"`
+	BirthYear   int                `json:"birthYear"`
+	DiedYear    int                `json:"diedYear"`
+	Image       string             `json:"image"`
+	Chairs      []*ChairOutputData `json:"chairs,omitempty"`
 }
 
-func NewChairAuthorOutputData(c *chairAuthor.ChairAuthor) *ChairAuthorOutputData {
+func NewChairAuthorOutputData(ca *chairAuthor.ChairAuthor) *ChairAuthorOutputData {
+	var chairs []*ChairOutputData
+
+	for _, c := range ca.Chairs {
+		cod := &ChairOutputData{
+			ID:      c.ID,
+			Name:    c.Name,
+			Feature: c.Feature,
+			Year:    c.Year,
+			Image:   c.Image,
+			Author: ChairAuthorOutputData{
+				ID:          ca.ID.Value(),
+				Name:        ca.Name.Value(),
+				Description: ca.Description.Value(),
+				BirthYear:   ca.BirthYear.Value(),
+				DiedYear:    ca.DiedYear.Value(),
+				Image:       ca.Image.Value(),
+			},
+		}
+		chairs = append(chairs, cod)
+	}
+
 	return &ChairAuthorOutputData{
-		ID:          c.ID.Value(),
-		Name:        c.Name.Value(),
-		Description: c.Description.Value(),
-		BirthYear:   c.BirthYear.Value(),
-		DiedYear:    c.DiedYear.Value(),
-		Image:       c.Image.Value(),
+		ID:          ca.ID.Value(),
+		Name:        ca.Name.Value(),
+		Description: ca.Description.Value(),
+		BirthYear:   ca.BirthYear.Value(),
+		DiedYear:    ca.DiedYear.Value(),
+		Image:       ca.Image.Value(),
+		Chairs:      chairs,
 	}
 }

@@ -6,7 +6,9 @@ import (
 	"gorm.io/gorm"
 )
 
-type ChairAuthorController interface{}
+type ChairAuthorController interface {
+	FetchAll(c echo.Context) error
+}
 
 type newChairAuthorInputPort func(o port.ChairAuthorOutputPort, r port.ChairAuthorRepository) port.ChairAuthorInputPort
 type newChairAuthorOutputPort func(c echo.Context) port.ChairAuthorOutputPort
@@ -34,4 +36,10 @@ func (cc *chairAuthorController) handler(c echo.Context) port.ChairAuthorInputPo
 	cip := cc.newInputPort(cop, cr)
 
 	return cip
+}
+
+func (cc *chairAuthorController) FetchAll(c echo.Context) error {
+	cc.handler(c).FetchAll()
+
+	return nil
 }

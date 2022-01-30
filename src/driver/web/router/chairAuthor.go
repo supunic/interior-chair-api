@@ -18,4 +18,6 @@ func NewChairAuthorRouter(e *echo.Echo, cc controller.ChairAuthorController) Cha
 	return &chairAuthorRouter{e: e, cc: cc}
 }
 
-func (cr *chairAuthorRouter) Register() {}
+func (cr *chairAuthorRouter) Register() {
+	cr.e.GET("/chair-authors/:id", cr.cc.FetchAll)
+}
