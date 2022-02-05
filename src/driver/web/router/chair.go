@@ -23,5 +23,5 @@ func (cr *chairRouter) Register() {
 	cr.e.DELETE("/chairs/:id", cr.cc.Delete)
 	cr.e.GET("/chairs", cr.cc.FetchAll)
 	cr.e.GET("/chairs/:id", cr.cc.FindByID)
-	cr.e.PUT("/chairs", cr.cc.Update)
+	cr.e.PUT("/chairs/:id", cr.cc.Update)
 }
