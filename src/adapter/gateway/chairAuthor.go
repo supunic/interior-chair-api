@@ -15,7 +15,6 @@ func NewChairAuthorRepository(db *gorm.DB) port.ChairAuthorRepository {
 }
 
 func (cr *chairAuthorGateway) FetchAll() ([]*chairAuthor.ChairAuthor, error) {
-	// TODO: ORMじゃないほうがドメイン周りがスッキリしそう
 	var chairAuthors []*chairAuthor.ChairAuthor
 	cr.db.Preload("Chairs").Find(&chairAuthors)
 
