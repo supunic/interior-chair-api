@@ -1,8 +1,8 @@
 package interactor
 
 import (
+	"app/entity/model/author"
 	"app/entity/model/chair"
-	"app/entity/model/chairAuthor"
 	"app/usecase/data"
 	"app/usecase/port"
 )
@@ -17,7 +17,7 @@ func NewChairInputPort(o port.ChairOutputPort, r port.ChairRepository) port.Chai
 }
 
 func (ci *chairInteractor) Create(cid *data.ChairInputData) {
-	newChairAuthor, err := chairAuthor.NewChairAuthor(
+	newAuthor, err := author.NewAuthor(
 		cid.Author.ID,
 		cid.Author.Name,
 		cid.Author.Description,
@@ -37,7 +37,7 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 		cid.Feature,
 		cid.Year,
 		cid.Image,
-		newChairAuthor,
+		newAuthor,
 	)
 
 	if err != nil {
@@ -111,7 +111,7 @@ func (ci *chairInteractor) FindByID(id uint) {
 }
 
 func (ci *chairInteractor) Update(cid *data.ChairInputData) {
-	newChairAuthor, err := chairAuthor.NewChairAuthor(
+	newAuthor, err := author.NewAuthor(
 		cid.Author.ID,
 		cid.Author.Name,
 		cid.Author.Description,
@@ -131,7 +131,7 @@ func (ci *chairInteractor) Update(cid *data.ChairInputData) {
 		cid.Feature,
 		cid.Year,
 		cid.Image,
-		newChairAuthor,
+		newAuthor,
 	)
 
 	if err != nil {

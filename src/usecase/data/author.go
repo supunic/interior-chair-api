@@ -1,19 +1,19 @@
 package data
 
 import (
-	"app/entity/model/chairAuthor"
+	"app/entity/model/author"
 )
 
-type ChairAuthorInputData struct {
-	ID          uint   `form:"chairAuthorId"  param:"id"`
-	Name        string `form:"chairAuthorName"`
-	Description string `form:"chairAuthorDescription"`
-	BirthYear   int    `form:"chairAuthorBirthYear"`
-	DiedYear    int    `form:"chairAuthorDiedYear"`
-	Image       string `form:"chairAuthorImage"`
+type AuthorInputData struct {
+	ID          uint   `form:"authorId"  param:"id"`
+	Name        string `form:"authorName"`
+	Description string `form:"authorDescription"`
+	BirthYear   int    `form:"authorBirthYear"`
+	DiedYear    int    `form:"authorDiedYear"`
+	Image       string `form:"authorImage"`
 }
 
-type ChairAuthorOutputData struct {
+type AuthorOutputData struct {
 	ID          uint               `json:"id"`
 	Name        string             `json:"name"`
 	Description string             `json:"description"`
@@ -23,7 +23,7 @@ type ChairAuthorOutputData struct {
 	Chairs      []*ChairOutputData `json:"chairs,omitempty"`
 }
 
-func NewChairAuthorOutputData(ca *chairAuthor.ChairAuthor) *ChairAuthorOutputData {
+func NewAuthorOutputData(ca *author.Author) *AuthorOutputData {
 	var chairs []*ChairOutputData
 
 	for _, c := range ca.Chairs {
@@ -33,7 +33,7 @@ func NewChairAuthorOutputData(ca *chairAuthor.ChairAuthor) *ChairAuthorOutputDat
 			Feature: c.Feature,
 			Year:    c.Year,
 			Image:   c.Image,
-			Author: ChairAuthorOutputData{
+			Author: AuthorOutputData{
 				ID:          ca.ID.Value(),
 				Name:        ca.Name.Value(),
 				Description: ca.Description.Value(),
@@ -45,7 +45,7 @@ func NewChairAuthorOutputData(ca *chairAuthor.ChairAuthor) *ChairAuthorOutputDat
 		chairs = append(chairs, cod)
 	}
 
-	return &ChairAuthorOutputData{
+	return &AuthorOutputData{
 		ID:          ca.ID.Value(),
 		Name:        ca.Name.Value(),
 		Description: ca.Description.Value(),

@@ -1,10 +1,10 @@
-package chairAuthor
+package author
 
 import "errors"
 
 type ID uint
 
-func NewChairAuthorID(val uint) (*ID, error) {
+func NewAuthorID(val uint) (*ID, error) {
 	if val < 0 {
 		return nil, errors.New("idは0以上の整数である必要があります。")
 	}

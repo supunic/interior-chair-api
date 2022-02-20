@@ -13,7 +13,7 @@ import (
 // initApp ドメインごとにアプリ初期化
 func initApp(e *echo.Echo, db *gorm.DB) {
 	initChair(e, db)
-	initChairAuthor(e, db)
+	initAuthor(e, db)
 	initUser(e, db)
 }
 
@@ -28,14 +28,14 @@ func initChair(e *echo.Echo, db *gorm.DB) {
 	cr.Register()
 }
 
-func initChairAuthor(e *echo.Echo, db *gorm.DB) {
-	cc := controller.NewChairAuthorController(
-		interactor.NewChairAuthorInputPort,
-		presenter.NewChairAuthorOutputPort,
-		gateway.NewChairAuthorRepository,
+func initAuthor(e *echo.Echo, db *gorm.DB) {
+	cc := controller.NewAuthorController(
+		interactor.NewAuthorInputPort,
+		presenter.NewAuthorOutputPort,
+		gateway.NewAuthorRepository,
 		db,
 	)
-	cr := router.NewChairAuthorRouter(e, cc)
+	cr := router.NewAuthorRouter(e, cc)
 	cr.Register()
 }
 

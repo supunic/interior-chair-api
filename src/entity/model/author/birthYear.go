@@ -1,8 +1,8 @@
-package chairAuthor
+package author
 
 type BirthYear int
 
-func NewChairAuthorBirthYear(val int) (*BirthYear, error) {
+func NewAuthorBirthYear(val int) (*BirthYear, error) {
 	birthYear := BirthYear(val)
 	return &birthYear, nil
 }

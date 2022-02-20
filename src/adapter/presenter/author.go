@@ -7,21 +7,21 @@ import (
 	"net/http"
 )
 
-type chairAuthorPresenter struct {
+type authorPresenter struct {
 	c echo.Context
 }
 
-func NewChairAuthorOutputPort(c echo.Context) port.ChairAuthorOutputPort {
-	return &chairAuthorPresenter{c: c}
+func NewAuthorOutputPort(c echo.Context) port.AuthorOutputPort {
+	return &authorPresenter{c: c}
 }
 
-func (cp *chairAuthorPresenter) Error(err error) {
+func (cp *authorPresenter) Error(err error) {
 	if err := cp.c.JSON(http.StatusInternalServerError, err.Error()); err != nil {
 		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func (cp *chairAuthorPresenter) FetchAll(cod []*data.ChairAuthorOutputData) {
+func (cp *authorPresenter) FetchAll(cod []*data.AuthorOutputData) {
 	if err := cp.c.JSON(http.StatusOK, cod); err != nil {
 		http.Error(cp.c.Response(), err.Error(), http.StatusInternalServerError)
 	}

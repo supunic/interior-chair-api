@@ -8,16 +8,16 @@ type ChairInputData struct {
 	Feature string `form:"chairFeature"`
 	Year    int    `form:"chairYear"`
 	Image   string `form:"chairImage"`
-	Author  ChairAuthorInputData
+	Author  AuthorInputData
 }
 
 type ChairOutputData struct {
-	ID      uint                  `json:"id"`
-	Name    string                `json:"name"`
-	Feature string                `json:"feature"`
-	Year    int                   `json:"year"`
-	Image   string                `json:"image"`
-	Author  ChairAuthorOutputData `json:"author,omitempty"`
+	ID      uint             `json:"id"`
+	Name    string           `json:"name"`
+	Feature string           `json:"feature"`
+	Year    int              `json:"year"`
+	Image   string           `json:"image"`
+	Author  AuthorOutputData `json:"author,omitempty"`
 }
 
 func NewChairOutputData(c *chair.Chair) *ChairOutputData {
@@ -27,13 +27,13 @@ func NewChairOutputData(c *chair.Chair) *ChairOutputData {
 		Feature: c.Feature.Value(),
 		Year:    c.Year.Value(),
 		Image:   c.Image.Value(),
-		Author: ChairAuthorOutputData{
-			ID:          c.ChairAuthor.ID.Value(),
-			Name:        c.ChairAuthor.Name.Value(),
-			Description: c.ChairAuthor.Name.Value(),
-			BirthYear:   c.ChairAuthor.BirthYear.Value(),
-			DiedYear:    c.ChairAuthor.DiedYear.Value(),
-			Image:       c.ChairAuthor.Image.Value(),
+		Author: AuthorOutputData{
+			ID:          c.Author.ID.Value(),
+			Name:        c.Author.Name.Value(),
+			Description: c.Author.Name.Value(),
+			BirthYear:   c.Author.BirthYear.Value(),
+			DiedYear:    c.Author.DiedYear.Value(),
+			Image:       c.Author.Image.Value(),
 		},
 	}
 }

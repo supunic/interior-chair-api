@@ -1,8 +1,8 @@
-package chairAuthor
+package author
 
 type DiedYear int
 
-func NewChairAuthorDiedYear(val int) (*DiedYear, error) {
+func NewAuthorDiedYear(val int) (*DiedYear, error) {
 	diedYear := DiedYear(val)
 	return &diedYear, nil
 }

@@ -34,14 +34,14 @@ func (cr *chairGateway) Delete(id *chair.ID) error {
 
 func (cr *chairGateway) FetchAll() ([]*chair.Chair, error) {
 	var chairs []*chair.Chair
-	cr.db.Joins(`ChairAuthor`).Find(&chairs)
+	cr.db.Joins(`Author`).Find(&chairs)
 
 	return chairs, nil
 }
 
 func (cr *chairGateway) FindByID(id *chair.ID) (*chair.Chair, error) {
 	c := &chair.Chair{ID: *id}
-	cr.db.Joins(`ChairAuthor`).Find(&c)
+	cr.db.Joins(`Author`).Find(&c)
 
 	return c, nil
 }

@@ -1,7 +1,7 @@
 -- +migrate Up
-CREATE TABLE IF NOT EXISTS `chair_authors`
+CREATE TABLE IF NOT EXISTS `authors`
 (
-    `id`          INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '椅子作者ID',
+    `id`          INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '作者ID',
     `name`        VARCHAR(255) NOT NULL COMMENT '名前',
     `description` VARCHAR(255) NOT NULL COMMENT '説明',
     `birth_year`  INT          NOT NULL COMMENT '誕生年',

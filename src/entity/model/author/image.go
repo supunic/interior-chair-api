@@ -1,8 +1,8 @@
-package chairAuthor
+package author
 
 type Image string
 
-func NewChairAuthorImage(val string) (*Image, error) {
+func NewAuthorImage(val string) (*Image, error) {
 	image := Image(val)
 	return &image, nil
 }

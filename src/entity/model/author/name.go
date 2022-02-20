@@ -1,8 +1,8 @@
-package chairAuthor
+package author
 
 type Name string
 
-func NewChairAuthorName(val string) (*Name, error) {
+func NewAuthorName(val string) (*Name, error) {
 	name := Name(val)
 	return &name, nil
 }
