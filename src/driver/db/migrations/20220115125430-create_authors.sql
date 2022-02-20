@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `authors`
 );
 
 -- +migrate Down
-DROP TABLE IF EXISTS chair_authoers;
+DROP TABLE IF EXISTS authors;

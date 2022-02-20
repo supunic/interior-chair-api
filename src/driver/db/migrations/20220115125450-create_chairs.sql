@@ -11,5 +11,12 @@ CREATE TABLE IF NOT EXISTS `chairs`
     `updated_at` timestamp    NULL DEFAULT NULL
 );
 
+ALTER TABLE `chairs`
+    ADD CONSTRAINT `chairs_author_id_foreign`
+        FOREIGN KEY (`author_id`)
+            REFERENCES `authors` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
 -- +migrate Down
 DROP TABLE IF EXISTS chairs;
