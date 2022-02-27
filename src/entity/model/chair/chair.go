@@ -1,15 +1,11 @@
 package chair
 
-import "app/entity/model/author"
-
 type Chair struct {
-	ID       ID
-	AuthorID author.ID
-	Name     Name
-	Feature  Feature
-	Year     Year
-	Image    Image
-	Author   author.Author
+	ID      ID
+	Name    Name
+	Feature Feature
+	Year    Year
+	Image   Image
 }
 
 func NewChair(
@@ -18,7 +14,6 @@ func NewChair(
 	feature string,
 	year int,
 	image string,
-	author *author.Author,
 ) (*Chair, error) {
 	chairID, err := NewChairID(id)
 	if err != nil {
@@ -46,12 +41,10 @@ func NewChair(
 	}
 
 	return &Chair{
-		ID:       *chairID,
-		AuthorID: author.ID,
-		Name:     *chairName,
-		Feature:  *chairFeature,
-		Year:     *chairYear,
-		Image:    *chairImage,
-		Author:   *author,
+		ID:      *chairID,
+		Name:    *chairName,
+		Feature: *chairFeature,
+		Year:    *chairYear,
+		Image:   *chairImage,
 	}, nil
 }

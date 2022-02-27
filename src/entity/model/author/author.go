@@ -7,7 +7,6 @@ type Author struct {
 	BirthYear   BirthYear
 	DiedYear    DiedYear
 	Image       Image
-	Chairs      []Chair
 }
 
 func NewAuthor(
