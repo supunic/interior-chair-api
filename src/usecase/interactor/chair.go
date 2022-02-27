@@ -47,7 +47,7 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 		return
 	}
 
-	crd.Fill(nc, na)
+	crd.Bind(nc, na)
 
 	c, err := ci.r.Create(&crd)
 
@@ -71,7 +71,7 @@ func (ci *chairInteractor) Delete(id uint) {
 		return
 	}
 
-	crd.FillID(cid)
+	crd.BindID(cid)
 
 	if err := ci.r.Delete(&crd); err != nil {
 		ci.o.Error(err)
@@ -112,7 +112,7 @@ func (ci *chairInteractor) FindByID(id uint) {
 		return
 	}
 
-	crd.FillID(cid)
+	crd.BindID(cid)
 
 	c, err := ci.r.FindByID(&crd)
 
@@ -157,7 +157,7 @@ func (ci *chairInteractor) Update(cid *data.ChairInputData) {
 		return
 	}
 
-	crd.Fill(nc, na)
+	crd.Bind(nc, na)
 
 	uc, err := ci.r.Update(&crd)
 

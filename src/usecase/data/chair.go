@@ -37,7 +37,7 @@ func (*ChairRepositoryData) TableName() string {
 	return "chairs"
 }
 
-func (crd *ChairRepositoryData) Fill(c *chair.Chair, a *author.Author) {
+func (crd *ChairRepositoryData) Bind(c *chair.Chair, a *author.Author) {
 	crd.ID = c.ID.Value()
 	crd.AuthorID = a.ID.Value()
 	crd.Name = c.Name.Value()
@@ -52,7 +52,7 @@ func (crd *ChairRepositoryData) Fill(c *chair.Chair, a *author.Author) {
 	crd.Author.Image = a.Image.Value()
 }
 
-func (crd *ChairRepositoryData) FillID(id *chair.ID) {
+func (crd *ChairRepositoryData) BindID(id *chair.ID) {
 	crd.ID = id.Value()
 }
 
