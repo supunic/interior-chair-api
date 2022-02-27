@@ -1,7 +1,7 @@
 package gateway
 
 import (
-	"app/entity/model/author"
+	"app/usecase/data"
 	"app/usecase/port"
 	"gorm.io/gorm"
 )
@@ -14,9 +14,12 @@ func NewAuthorRepository(db *gorm.DB) port.AuthorRepository {
 	return &authorGateway{db: db}
 }
 
-func (cr *authorGateway) FetchAll() ([]*author.Author, error) {
-	var authors []*author.Author
-	cr.db.Preload("Chairs").Find(&authors)
+func (cr *authorGateway) FetchAll() ([]*data.AuthorRepositoryData, error) {
+	var as []*data.AuthorRepositoryData
 
-	return authors, nil
+	if err := cr.db.Find(&as).Error; err != nil {
+		return nil, err
+	}
+
+	return as, nil
 }

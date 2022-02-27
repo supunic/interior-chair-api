@@ -1,7 +1,7 @@
 package gateway
 
 import (
-	"app/entity/model/chair"
+	"app/usecase/data"
 	"app/usecase/port"
 	"gorm.io/gorm"
 )
@@ -14,7 +14,7 @@ func NewChairRepository(db *gorm.DB) port.ChairRepository {
 	return &chairGateway{db: db}
 }
 
-func (cr *chairGateway) Create(c *chair.Chair) (*chair.Chair, error) {
+func (cr *chairGateway) Create(c *data.ChairRepositoryData) (*data.ChairRepositoryData, error) {
 	if err := cr.db.Create(&c).Error; err != nil {
 		return nil, err
 	}
@@ -22,9 +22,7 @@ func (cr *chairGateway) Create(c *chair.Chair) (*chair.Chair, error) {
 	return c, nil
 }
 
-func (cr *chairGateway) Delete(id *chair.ID) error {
-	c := &chair.Chair{ID: *id}
-
+func (cr *chairGateway) Delete(c *data.ChairRepositoryData) error {
 	if err := cr.db.Delete(&c).Error; err != nil {
 		return err
 	}
@@ -32,21 +30,25 @@ func (cr *chairGateway) Delete(id *chair.ID) error {
 	return nil
 }
 
-func (cr *chairGateway) FetchAll() ([]*chair.Chair, error) {
-	var chairs []*chair.Chair
-	cr.db.Joins(`Author`).Find(&chairs)
+func (cr *chairGateway) FetchAll() ([]*data.ChairRepositoryData, error) {
+	var cs []*data.ChairRepositoryData
 
-	return chairs, nil
+	if err := cr.db.Joins(`Author`).Find(&cs).Error; err != nil {
+		return nil, err
+	}
+
+	return cs, nil
 }
 
-func (cr *chairGateway) FindByID(id *chair.ID) (*chair.Chair, error) {
-	c := &chair.Chair{ID: *id}
-	cr.db.Joins(`Author`).Find(&c)
+func (cr *chairGateway) FindByID(c *data.ChairRepositoryData) (*data.ChairRepositoryData, error) {
+	if err := cr.db.Joins(`Author`).Find(&c).Error; err != nil {
+		return nil, err
+	}
 
 	return c, nil
 }
 
-func (cr *chairGateway) Update(c *chair.Chair) (*chair.Chair, error) {
+func (cr *chairGateway) Update(c *data.ChairRepositoryData) (*data.ChairRepositoryData, error) {
 	if err := cr.db.Updates(&c).Error; err != nil {
 		return nil, err
 	}
