@@ -23,6 +23,20 @@ type ChairOutputData struct {
 	Author  AuthorOutputData `json:"author"`
 }
 
+func (cod *ChairOutputData) Bind(crd *ChairRepositoryData) {
+	cod.ID = crd.ID
+	cod.Name = crd.Name
+	cod.Feature = crd.Feature
+	cod.Year = crd.Year
+	cod.Image = crd.Image
+	cod.Author.ID = crd.Author.ID
+	cod.Author.Name = crd.Author.Name
+	cod.Author.Description = crd.Author.Description
+	cod.Author.BirthYear = crd.Author.BirthYear
+	cod.Author.DiedYear = crd.Author.DiedYear
+	cod.Author.Image = crd.Author.Image
+}
+
 type ChairRepositoryData struct {
 	ID       uint   `gorm:""`
 	AuthorID uint   `gorm:""`
@@ -54,18 +68,4 @@ func (crd *ChairRepositoryData) Bind(c *chair.Chair, a *author.Author) {
 
 func (crd *ChairRepositoryData) BindID(id *chair.ID) {
 	crd.ID = id.Value()
-}
-
-func (cod *ChairOutputData) Bind(crd *ChairRepositoryData) {
-	cod.ID = crd.ID
-	cod.Name = crd.Name
-	cod.Feature = crd.Feature
-	cod.Year = crd.Year
-	cod.Image = crd.Image
-	cod.Author.ID = crd.Author.ID
-	cod.Author.Name = crd.Author.Name
-	cod.Author.Description = crd.Author.Description
-	cod.Author.BirthYear = crd.Author.BirthYear
-	cod.Author.DiedYear = crd.Author.DiedYear
-	cod.Author.Image = crd.Author.Image
 }
