@@ -56,20 +56,16 @@ func (crd *ChairRepositoryData) FillID(id *chair.ID) {
 	crd.ID = id.Value()
 }
 
-func NewChairOutputData(crd *ChairRepositoryData) *ChairOutputData {
-	return &ChairOutputData{
-		ID:      crd.ID,
-		Name:    crd.Name,
-		Feature: crd.Feature,
-		Year:    crd.Year,
-		Image:   crd.Image,
-		Author: AuthorOutputData{
-			ID:          crd.Author.ID,
-			Name:        crd.Author.Name,
-			Description: crd.Author.Description,
-			BirthYear:   crd.Author.BirthYear,
-			DiedYear:    crd.Author.DiedYear,
-			Image:       crd.Author.Image,
-		},
-	}
+func (cod *ChairOutputData) Bind(crd *ChairRepositoryData) {
+	cod.ID = crd.ID
+	cod.Name = crd.Name
+	cod.Feature = crd.Feature
+	cod.Year = crd.Year
+	cod.Image = crd.Image
+	cod.Author.ID = crd.Author.ID
+	cod.Author.Name = crd.Author.Name
+	cod.Author.Description = crd.Author.Description
+	cod.Author.BirthYear = crd.Author.BirthYear
+	cod.Author.DiedYear = crd.Author.DiedYear
+	cod.Author.Image = crd.Author.Image
 }

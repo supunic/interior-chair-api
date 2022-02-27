@@ -18,6 +18,7 @@ func NewChairInputPort(o port.ChairOutputPort, r port.ChairRepository) port.Chai
 
 func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 	var crd data.ChairRepositoryData
+	var cod data.ChairOutputData
 
 	na, err := author.NewAuthor(
 		cid.Author.ID,
@@ -55,9 +56,9 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 		return
 	}
 
-	cod := data.NewChairOutputData(c)
+	cod.Bind(c)
 
-	ci.o.Create(cod)
+	ci.o.Create(&cod)
 }
 
 func (ci *chairInteractor) Delete(id uint) {
@@ -81,7 +82,7 @@ func (ci *chairInteractor) Delete(id uint) {
 }
 
 func (ci *chairInteractor) FetchAll() {
-	var cod []*data.ChairOutputData
+	var cods []*data.ChairOutputData
 
 	cs, err := ci.r.FetchAll()
 
@@ -91,14 +92,18 @@ func (ci *chairInteractor) FetchAll() {
 	}
 
 	for _, c := range cs {
-		cod = append(cod, data.NewChairOutputData(c))
+		var cod data.ChairOutputData
+
+		cod.Bind(c)
+		cods = append(cods, &cod)
 	}
 
-	ci.o.FetchAll(cod)
+	ci.o.FetchAll(cods)
 }
 
 func (ci *chairInteractor) FindByID(id uint) {
 	var crd data.ChairRepositoryData
+	var cod data.ChairOutputData
 
 	cid, err := chair.NewChairID(id)
 
@@ -116,13 +121,14 @@ func (ci *chairInteractor) FindByID(id uint) {
 		return
 	}
 
-	cod := data.NewChairOutputData(c)
+	cod.Bind(c)
 
-	ci.o.FindByID(cod)
+	ci.o.FindByID(&cod)
 }
 
 func (ci *chairInteractor) Update(cid *data.ChairInputData) {
 	var crd data.ChairRepositoryData
+	var cod data.ChairOutputData
 
 	na, err := author.NewAuthor(
 		cid.Author.ID,
@@ -160,7 +166,7 @@ func (ci *chairInteractor) Update(cid *data.ChairInputData) {
 		return
 	}
 
-	cod := data.NewChairOutputData(uc)
+	cod.Bind(uc)
 
-	ci.o.Update(cod)
+	ci.o.Update(&cod)
 }
