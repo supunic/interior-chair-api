@@ -1,6 +1,9 @@
 package data
 
-import "app/entity/model/chair"
+import (
+	"app/entity/model/author"
+	"app/entity/model/chair"
+)
 
 type ChairInputData struct {
 	ID      uint   `form:"chairId" param:"id"`
@@ -17,23 +20,56 @@ type ChairOutputData struct {
 	Feature string           `json:"feature"`
 	Year    int              `json:"year"`
 	Image   string           `json:"image"`
-	Author  AuthorOutputData `json:"author,omitempty"`
+	Author  AuthorOutputData `json:"author"`
 }
 
-func NewChairOutputData(c *chair.Chair) *ChairOutputData {
+type ChairRepositoryData struct {
+	ID       uint   `gorm:""`
+	AuthorID uint   `gorm:""`
+	Name     string `gorm:""`
+	Feature  string `gorm:""`
+	Year     int    `gorm:""`
+	Image    string `gorm:""`
+	Author   AuthorRepositoryData
+}
+
+func (*ChairRepositoryData) TableName() string {
+	return "chairs"
+}
+
+func (crd *ChairRepositoryData) Fill(c *chair.Chair, a *author.Author) {
+	crd.ID = c.ID.Value()
+	crd.AuthorID = a.ID.Value()
+	crd.Name = c.Name.Value()
+	crd.Feature = c.Feature.Value()
+	crd.Year = c.Year.Value()
+	crd.Image = c.Image.Value()
+	crd.Author.ID = a.ID.Value()
+	crd.Author.Name = a.Name.Value()
+	crd.Author.Description = a.Description.Value()
+	crd.Author.BirthYear = a.BirthYear.Value()
+	crd.Author.DiedYear = a.DiedYear.Value()
+	crd.Author.Image = a.Image.Value()
+}
+
+func (crd *ChairRepositoryData) FillID(id *chair.ID) {
+	crd.ID = id.Value()
+}
+
+func NewChairOutputData(crd *ChairRepositoryData) *ChairOutputData {
 	return &ChairOutputData{
-		ID:      c.ID.Value(),
-		Name:    c.Name.Value(),
-		Feature: c.Feature.Value(),
-		Year:    c.Year.Value(),
-		Image:   c.Image.Value(),
+		ID:      crd.ID,
+		Name:    crd.Name,
+		Feature: crd.Feature,
+		Year:    crd.Year,
+		Image:   crd.Image,
 		Author: AuthorOutputData{
-			ID:          c.Author.ID.Value(),
-			Name:        c.Author.Name.Value(),
-			Description: c.Author.Name.Value(),
-			BirthYear:   c.Author.BirthYear.Value(),
-			DiedYear:    c.Author.DiedYear.Value(),
-			Image:       c.Author.Image.Value(),
+			ID:          crd.Author.ID,
+			Name:        crd.Author.Name,
+			Description: crd.Author.Description,
+			BirthYear:   crd.Author.BirthYear,
+			DiedYear:    crd.Author.DiedYear,
+			Image:       crd.Author.Image,
 		},
 	}
 }
