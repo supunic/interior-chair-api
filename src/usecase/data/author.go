@@ -18,6 +18,15 @@ type AuthorOutputData struct {
 	Image       string `json:"image"`
 }
 
+func (aod *AuthorOutputData) Bind(ard *AuthorRepositoryData) {
+	aod.ID = ard.ID
+	aod.Name = ard.Name
+	aod.Description = ard.Description
+	aod.BirthYear = ard.BirthYear
+	aod.DiedYear = ard.DiedYear
+	aod.Image = ard.Image
+}
+
 type AuthorRepositoryData struct {
 	ID          uint   `gorm:""`
 	Name        string `gorm:""`
@@ -29,15 +38,4 @@ type AuthorRepositoryData struct {
 
 func (*AuthorRepositoryData) TableName() string {
 	return "authors"
-}
-
-func NewAuthorOutputData(ard *AuthorRepositoryData) *AuthorOutputData {
-	return &AuthorOutputData{
-		ID:          ard.ID,
-		Name:        ard.Name,
-		Description: ard.Description,
-		BirthYear:   ard.BirthYear,
-		DiedYear:    ard.DiedYear,
-		Image:       ard.Image,
-	}
 }

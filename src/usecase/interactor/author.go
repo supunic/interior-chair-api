@@ -15,7 +15,7 @@ func NewAuthorInputPort(o port.AuthorOutputPort, r port.AuthorRepository) port.A
 }
 
 func (ci *authorInteractor) FetchAll() {
-	var cod []*data.AuthorOutputData
+	var aods []*data.AuthorOutputData
 
 	cs, err := ci.r.FetchAll()
 
@@ -25,8 +25,12 @@ func (ci *authorInteractor) FetchAll() {
 	}
 
 	for _, c := range cs {
-		cod = append(cod, data.NewAuthorOutputData(c))
+		var aod data.AuthorOutputData
+
+		aod.Bind(c)
+
+		aods = append(aods, &aod)
 	}
 
-	ci.o.FetchAll(cod)
+	ci.o.FetchAll(aods)
 }
