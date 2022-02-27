@@ -1,7 +1,6 @@
 package port
 
 import (
-	"app/entity/model/author"
 	"app/usecase/data"
 )
 
@@ -15,5 +14,5 @@ type AuthorOutputPort interface {
 }
 
 type AuthorRepository interface {
-	FetchAll() ([]*author.Author, error)
+	FetchAll() ([]*data.AuthorRepositoryData, error)
 }

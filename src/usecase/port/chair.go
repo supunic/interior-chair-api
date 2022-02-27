@@ -1,7 +1,6 @@
 package port
 
 import (
-	"app/entity/model/chair"
 	"app/usecase/data"
 )
 
@@ -23,9 +22,9 @@ type ChairOutputPort interface {
 }
 
 type ChairRepository interface {
-	Create(chair *chair.Chair) (*chair.Chair, error)
-	Delete(id *chair.ID) error
-	FetchAll() ([]*chair.Chair, error)
-	FindByID(id *chair.ID) (*chair.Chair, error)
-	Update(chair *chair.Chair) (*chair.Chair, error)
+	Create(chairRepositoryData *data.ChairRepositoryData) (*data.ChairRepositoryData, error)
+	Delete(chairRepositoryData *data.ChairRepositoryData) error
+	FetchAll() ([]*data.ChairRepositoryData, error)
+	FindByID(chairRepositoryData *data.ChairRepositoryData) (*data.ChairRepositoryData, error)
+	Update(chairRepositoryData *data.ChairRepositoryData) (*data.ChairRepositoryData, error)
 }
