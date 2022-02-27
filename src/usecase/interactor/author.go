@@ -17,15 +17,15 @@ func NewAuthorInputPort(o port.AuthorOutputPort, r port.AuthorRepository) port.A
 func (ci *authorInteractor) FetchAll() {
 	var cod []*data.AuthorOutputData
 
-	c, err := ci.r.FetchAll()
+	cs, err := ci.r.FetchAll()
 
 	if err != nil {
 		ci.o.Error(err)
 		return
 	}
 
-	for _, cv := range c {
-		cod = append(cod, data.NewAuthorOutputData(cv))
+	for _, c := range cs {
+		cod = append(cod, data.NewAuthorOutputData(c))
 	}
 
 	ci.o.FetchAll(cod)

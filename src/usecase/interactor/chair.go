@@ -17,7 +17,9 @@ func NewChairInputPort(o port.ChairOutputPort, r port.ChairRepository) port.Chai
 }
 
 func (ci *chairInteractor) Create(cid *data.ChairInputData) {
-	newAuthor, err := author.NewAuthor(
+	var crd data.ChairRepositoryData
+
+	na, err := author.NewAuthor(
 		cid.Author.ID,
 		cid.Author.Name,
 		cid.Author.Description,
@@ -31,13 +33,12 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 		return
 	}
 
-	newChair, err := chair.NewChair(
+	nc, err := chair.NewChair(
 		cid.ID,
 		cid.Name,
 		cid.Feature,
 		cid.Year,
 		cid.Image,
-		newAuthor,
 	)
 
 	if err != nil {
@@ -45,7 +46,9 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 		return
 	}
 
-	c, err := ci.r.Create(newChair)
+	crd.Fill(nc, na)
+
+	c, err := ci.r.Create(&crd)
 
 	if err != nil {
 		ci.o.Error(err)
@@ -58,14 +61,18 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 }
 
 func (ci *chairInteractor) Delete(id uint) {
-	chairID, err := chair.NewChairID(id)
+	var crd data.ChairRepositoryData
+
+	cid, err := chair.NewChairID(id)
 
 	if err != nil {
 		ci.o.Error(err)
 		return
 	}
 
-	if err := ci.r.Delete(chairID); err != nil {
+	crd.FillID(cid)
+
+	if err := ci.r.Delete(&crd); err != nil {
 		ci.o.Error(err)
 		return
 	}
@@ -76,29 +83,33 @@ func (ci *chairInteractor) Delete(id uint) {
 func (ci *chairInteractor) FetchAll() {
 	var cod []*data.ChairOutputData
 
-	c, err := ci.r.FetchAll()
+	cs, err := ci.r.FetchAll()
 
 	if err != nil {
 		ci.o.Error(err)
 		return
 	}
 
-	for _, cv := range c {
-		cod = append(cod, data.NewChairOutputData(cv))
+	for _, c := range cs {
+		cod = append(cod, data.NewChairOutputData(c))
 	}
 
 	ci.o.FetchAll(cod)
 }
 
 func (ci *chairInteractor) FindByID(id uint) {
-	chairID, err := chair.NewChairID(id)
+	var crd data.ChairRepositoryData
+
+	cid, err := chair.NewChairID(id)
 
 	if err != nil {
 		ci.o.Error(err)
 		return
 	}
 
-	c, err := ci.r.FindByID(chairID)
+	crd.FillID(cid)
+
+	c, err := ci.r.FindByID(&crd)
 
 	if err != nil {
 		ci.o.Error(err)
@@ -111,7 +122,9 @@ func (ci *chairInteractor) FindByID(id uint) {
 }
 
 func (ci *chairInteractor) Update(cid *data.ChairInputData) {
-	newAuthor, err := author.NewAuthor(
+	var crd data.ChairRepositoryData
+
+	na, err := author.NewAuthor(
 		cid.Author.ID,
 		cid.Author.Name,
 		cid.Author.Description,
@@ -125,13 +138,12 @@ func (ci *chairInteractor) Update(cid *data.ChairInputData) {
 		return
 	}
 
-	newChair, err := chair.NewChair(
+	nc, err := chair.NewChair(
 		cid.ID,
 		cid.Name,
 		cid.Feature,
 		cid.Year,
 		cid.Image,
-		newAuthor,
 	)
 
 	if err != nil {
@@ -139,7 +151,9 @@ func (ci *chairInteractor) Update(cid *data.ChairInputData) {
 		return
 	}
 
-	uc, err := ci.r.Update(newChair)
+	crd.Fill(nc, na)
+
+	uc, err := ci.r.Update(&crd)
 
 	if err != nil {
 		ci.o.Error(err)
