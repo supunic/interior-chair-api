@@ -36,6 +36,7 @@ func (ci *chairInteractor) Create(cid *data.ChairInputData) {
 
 	nc, err := chair.NewChair(
 		cid.ID,
+		cid.Author.ID,
 		cid.Name,
 		cid.Feature,
 		cid.Year,
@@ -146,6 +147,7 @@ func (ci *chairInteractor) Update(cid *data.ChairInputData) {
 
 	nc, err := chair.NewChair(
 		cid.ID,
+		cid.Author.ID,
 		cid.Name,
 		cid.Feature,
 		cid.Year,

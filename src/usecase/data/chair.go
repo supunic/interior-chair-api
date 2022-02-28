@@ -53,7 +53,7 @@ func (*ChairRepositoryData) TableName() string {
 
 func (crd *ChairRepositoryData) Bind(c *chair.Chair, a *author.Author) {
 	crd.ID = c.ID.Value()
-	crd.AuthorID = a.ID.Value()
+	crd.AuthorID = c.AuthorID.Value()
 	crd.Name = c.Name.Value()
 	crd.Feature = c.Feature.Value()
 	crd.Year = c.Year.Value()
