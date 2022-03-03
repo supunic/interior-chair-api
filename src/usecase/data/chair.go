@@ -6,7 +6,7 @@ import (
 )
 
 type ChairInputData struct {
-	ID      uint   `form:"chairId" param:"id"`
+	ID      uint   `form:"chairId" param:"chairId"`
 	Name    string `form:"chairName"`
 	Feature string `form:"chairFeature"`
 	Year    int    `form:"chairYear"`

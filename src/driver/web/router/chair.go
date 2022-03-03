@@ -20,8 +20,8 @@ func NewChairRouter(e *echo.Echo, cc controller.ChairController) ChairRouter {
 
 func (cr *chairRouter) Register() {
 	cr.e.POST("/chairs", cr.cc.Create)
-	cr.e.DELETE("/chairs/:id", cr.cc.Delete)
+	cr.e.DELETE("/chairs/:chairId", cr.cc.Delete)
 	cr.e.GET("/chairs", cr.cc.FetchAll)
-	cr.e.GET("/chairs/:id", cr.cc.FindByID)
-	cr.e.PUT("/chairs/:id", cr.cc.Update)
+	cr.e.GET("/chairs/:chairId", cr.cc.FindByID)
+	cr.e.PUT("/chairs/:chairId", cr.cc.Update)
 }

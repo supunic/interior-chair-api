@@ -1,7 +1,7 @@
 package data
 
 type AuthorInputData struct {
-	ID          uint   `form:"authorId"  param:"id"`
+	ID          uint   `form:"authorId"  param:"authorId"`
 	Name        string `form:"authorName"`
 	Description string `form:"authorDescription"`
 	BirthYear   int    `form:"authorBirthYear"`
